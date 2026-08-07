@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSA Master Guide — Algorithm Patterns & Hashing</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --bg2: #1a1d27;
+    --bg3: #22263a;
+    --accent: #7c6af7;
+    --accent2: #f97316;
+    --accent3: #22d3ee;
+    --green: #4ade80;
+    --red: #f87171;
+    --yellow: #fbbf24;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --border: #2d3348;
+    --code-bg: #12151f;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* ── HEADER ── */
+  .hero {
+    background: linear-gradient(135deg, #1a1d27 0%, #0f1117 50%, #1a0a2e 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 60px 40px 50px;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: 2.6rem;
+    font-weight: 800;
+    background: linear-gradient(90deg, var(--accent), var(--accent3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+  .hero p { color: var(--muted); font-size: 1.05rem; }
+  .badges { display: flex; gap: 10px; justify-content: center; margin-top: 18px; flex-wrap: wrap; }
+  .badge {
+    padding: 4px 14px; border-radius: 20px; font-size: 0.78rem;
+    font-weight: 600; letter-spacing: 0.5px;
+  }
+  .badge-purple { background: #2d1f6e; color: #a78bfa; border: 1px solid #4c3a9e; }
+  .badge-orange { background: #3d1f0a; color: #fb923c; border: 1px solid #7c3a0a; }
+  .badge-cyan   { background: #0a2d3d; color: #67e8f9; border: 1px solid #0a5a7c; }
+  .badge-green  { background: #0a2d1a; color: #6ee7b7; border: 1px solid #0a5a30; }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+
+  /* ── TOC ── */
+  .toc {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 30px 36px;
+    margin-bottom: 50px;
+  }
+  .toc h2 { color: var(--accent3); margin-bottom: 16px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+  .toc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 30px; }
+  .toc a {
+    color: var(--muted); text-decoration: none; font-size: 0.92rem;
+    padding: 4px 0; display: flex; align-items: center; gap: 8px;
+    transition: color 0.2s;
+  }
+  .toc a:hover { color: var(--accent); }
+  .toc a span { color: var(--accent); font-weight: 700; font-size: 0.8rem; }
+
+  /* ── SECTION ── */
+  .section {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px;
+    margin-bottom: 32px;
+  }
+  .section-header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 24px; padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-icon {
+    width: 46px; height: 46px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; flex-shrink: 0;
+  }
+  .icon-purple { background: #2d1f6e; }
+  .icon-orange { background: #3d1f0a; }
+  .icon-cyan   { background: #0a2d3d; }
+  .icon-green  { background: #0a2d1a; }
+  .icon-red    { background: #2d0a0a; }
+  .icon-yellow { background: #2d220a; }
+  .section-title h2 { font-size: 1.35rem; font-weight: 700; }
+  .section-title p  { color: var(--muted); font-size: 0.88rem; margin-top: 2px; }
+
+  h3 { font-size: 1.05rem; color: var(--accent3); margin: 22px 0 10px; }
+  h4 { font-size: 0.95rem; color: var(--yellow); margin: 16px 0 8px; }
+  p  { color: var(--text); margin-bottom: 10px; }
+
+  /* ── CODE ── */
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    overflow-x: auto;
+    margin: 12px 0 18px;
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.83rem;
+    line-height: 1.65;
+  }
+  code {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 2px 7px;
+    font-family: 'Cascadia Code', 'Fira Code', monospace;
+    font-size: 0.82rem;
+    color: var(--accent3);
+  }
+  pre code { background: none; border: none; padding: 0; color: #c9d1d9; }
+
+  /* ── SIGNAL BOX ── */
+  .signal-box {
+    background: #1a0a2e;
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    margin: 14px 0;
+  }
+  .signal-box .label {
+    color: var(--accent); font-size: 0.75rem;
+    font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; margin-bottom: 6px;
+  }
+  .signal-box ul { padding-left: 18px; }
+  .signal-box li { color: var(--text); margin: 4px 0; font-size: 0.9rem; }
+
+  .tip-box {
+    background: #0a2d1a;
+    border-left: 3px solid var(--green);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    margin: 14px 0;
+  }
+  .tip-box .label { color: var(--green); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+
+  .warn-box {
+    background: #2d1a0a;
+    border-left: 3px solid var(--accent2);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    margin: 14px 0;
+  }
+  .warn-box .label { color: var(--accent2); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+
+  /* ── TABLES ── */
+  table {
+    width: 100%; border-collapse: collapse;
+    margin: 14px 0 20px; font-size: 0.88rem;
+  }
+  th {
+    background: var(--bg3); color: var(--accent3);
+    padding: 10px 14px; text-align: left;
+    font-size: 0.78rem; text-transform: uppercase;
+    letter-spacing: 0.8px; border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 10px 14px; border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(124,106,247,0.05); }
+  .good  { color: var(--green); font-weight: 600; }
+  .bad   { color: var(--red);   font-weight: 600; }
+  .warn  { color: var(--yellow);font-weight: 600; }
+
+  /* ── COMPLEXITY TAGS ── */
+  .cx {
+    display: inline-block; padding: 2px 9px;
+    border-radius: 6px; font-size: 0.78rem; font-weight: 700;
+    font-family: monospace;
+  }
+  .cx-g  { background: #0a2d1a; color: #4ade80; border: 1px solid #166534; }
+  .cx-y  { background: #2d220a; color: #fbbf24; border: 1px solid #92400e; }
+  .cx-r  { background: #2d0a0a; color: #f87171; border: 1px solid #991b1b; }
+
+  /* ── VARIANT CARDS ── */
+  .variants { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin: 16px 0; }
+  .variant-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+  }
+  .variant-card h4 { color: var(--yellow); margin: 0 0 8px; font-size: 0.9rem; }
+  .variant-card p  { color: var(--muted); font-size: 0.85rem; margin: 0; }
+  .variant-card pre { margin: 10px 0 0; font-size: 0.78rem; }
+
+  /* ── DECISION TREE ── */
+  .tree-box {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    font-family: 'Cascadia Code', monospace;
+    font-size: 0.82rem;
+    line-height: 1.9;
+    white-space: pre;
+    overflow-x: auto;
+    color: #c9d1d9;
+    margin: 16px 0;
+  }
+
+  /* ── COMPARISON GRID ── */
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .compare-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+  }
+  .compare-card h4 { margin: 0 0 10px; font-size: 0.9rem; }
+  .compare-card.good-card { border-color: #166534; }
+  .compare-card.bad-card  { border-color: #991b1b; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px; background: var(--border);
+    margin: 30px 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center; padding: 40px 20px;
+    color: var(--muted); font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+  }
+  footer span { color: var(--accent); }
+
+  @media (max-width: 600px) {
+    .toc-grid, .compare-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.8rem; }
+    .section { padding: 22px; }
+    pre { font-size: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>DSA Master Guide</h1>
+  <p>Algorithm Patterns · Intuition · Complexity Analysis · Hashing Deep Dive</p>
+  <div class="badges">
+    <span class="badge badge-purple">Striver A–Z Series</span>
+    <span class="badge badge-orange">9 Algorithm Patterns</span>
+    <span class="badge badge-cyan">Hashing Complexity</span>
+    <span class="badge badge-green">Interview Ready</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <h2>📋 Table of Contents</h2>
+    <div class="toc-grid">
+      <a href="#s1"><span>01</span> Two Pointers</a>
+      <a href="#s6"><span>06</span> Boyer-Moore Voting</a>
+      <a href="#s2"><span>02</span> Sliding Window</a>
+      <a href="#s7"><span>07</span> Matrix Manipulation</a>
+      <a href="#s3"><span>03</span> Prefix Sum + HashMap</a>
+      <a href="#s8"><span>08</span> Suffix / Prefix Traversal</a>
+      <a href="#s4"><span>04</span> HashSet / HashMap Lookup</a>
+      <a href="#s9"><span>09</span> Mathematical / Formula</a>
+      <a href="#s5"><span>05</span> Sorting as Preprocessing</a>
+      <a href="#s10"><span>10</span> Hashing Complexity Deep Dive</a>
+      <a href="#decision"><span>★</span> Master Decision Tree</a>
+      <a href="#cheatsheet"><span>★</span> Complexity Cheat Sheet</a>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 1: TWO POINTERS -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <div class="section-icon icon-purple">👆</div>
+      <div class="section-title">
+        <h2>1. Two Pointers</h2>
+        <p>Two index variables moving toward or away from each other — eliminates inner loop</p>
+      </div>
+    </div>
+
+    <h3>Problems Solved</h3>
+    <p>✅ Union of Two Sorted Arrays &nbsp;·&nbsp; ✅ Intersection of Two Sorted Arrays &nbsp;·&nbsp; ✅ 3 Sum &nbsp;·&nbsp; ✅ 4 Sum</p>
+
+    <div class="signal-box">
+      <div class="label">🚨 Signal Words — Use Two Pointers when you see:</div>
+      <ul>
+        <li>"Two sorted arrays" / "Find pair with given sum"</li>
+        <li>"Find triplet/quadruplet summing to target"</li>
+        <li>"Remove duplicates in sorted array"</li>
+        <li>"Palindrome check" / "Container with most water"</li>
+      </ul>
+    </div>
+
+    <h3>The 3 Variants</h3>
+    <div class="variants">
+      <div class="variant-card">
+        <h4>Variant 1 — Opposite Ends (Most Common)</h4>
+        <p>i starts left, j starts right. Move based on condition (sum too big/small).</p>
+        <pre>i=0 ──────────────►
+◄────────────── j=n-1
+
+Used in: 2Sum, 3Sum, 4Sum</pre>
+      </div>
+      <div class="variant-card">
+        <h4>Variant 2 — Same Direction (Slow-Fast)</h4>
+        <p>j moves faster than i. Used for window-like problems on arrays.</p>
+        <pre>slow=0 ──►
+fast=0 ──────────────►
+
+Used in: Remove duplicates,
+         Linked List cycle</pre>
+      </div>
+      <div class="variant-card">
+        <h4>Variant 3 — Two Arrays</h4>
+        <p>One pointer per array. Always advance the pointer with smaller value.</p>
+        <pre>i moves on array A ──►
+j moves on array B ──►
+
+Used in: Union, Intersection,
+         Merge Sorted Arrays</pre>
+      </div>
+    </div>
+
+    <h3>k-Sum Pattern Ladder</h3>
+    <table>
+      <tr><th>Problem</th><th>Loops</th><th>Technique</th><th>Time</th></tr>
+      <tr><td>2 Sum (sorted)</td><td>0 outer</td><td>Two Pointers</td><td><span class="cx cx-g">O(N)</span></td></tr>
+      <tr><td>3 Sum</td><td>1 outer (fix i)</td><td>Two Pointers inside</td><td><span class="cx cx-y">O(N²)</span></td></tr>
+      <tr><td>4 Sum</td><td>2 outer (fix i,j)</td><td>Two Pointers inside</td><td><span class="cx cx-r">O(N³)</span></td></tr>
+      <tr><td>k Sum</td><td>k-2 outer</td><td>Two Pointers inside</td><td><span class="cx cx-r">O(N^(k-1))</span></td></tr>
+    </table>
+
+    <div class="tip-box">
+      <div class="label">💡 Rule of Thumb</div>
+      <p>If you have a <strong>sorted array</strong> and need to find elements satisfying a condition, Two Pointers eliminates the inner loop: Brute O(N²) → Optimal O(N).</p>
+    </div>
+
+    <h3>Duplicate Skipping (3Sum / 4Sum)</h3>
+    <pre>sort(arr);
+for (int i = 0; i &lt; n-2; i++) {
+    if (i > 0 && arr[i] == arr[i-1]) continue;  // skip dup for i
+
+    int j = i+1, k = n-1;
+    while (j &lt; k) {
+        int sum = arr[i] + arr[j] + arr[k];
+        if (sum == 0) {
+            result.push_back({arr[i], arr[j], arr[k]});
+            while (j &lt; k && arr[j] == arr[j+1]) j++;  // skip dup j
+            while (j &lt; k && arr[k] == arr[k-1]) k--;  // skip dup k
+            j++; k--;
+        }
+        else if (sum &lt; 0) j++;
+        else              k--;
+    }
+}</pre>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 2: SLIDING WINDOW -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <div class="section-icon icon-orange">🪟</div>
+      <div class="section-title">
+        <h2>2. Sliding Window</h2>
+        <p>A window [left, right] that expands and shrinks — avoids recomputing full subarray</p>
+      </div>
+    </div>
+
+    <h3>Problems Solved</h3>
+    <p>✅ Longest Subarray with Sum K (positives only)</p>
+
+    <div class="signal-box">
+      <div class="label">🚨 Signal Words</div>
+      <ul>
+        <li>"Subarray/substring of size k"</li>
+        <li>"Longest/shortest subarray with property"</li>
+        <li>"Maximum sum subarray of fixed size"</li>
+        <li>"All positives + sum/condition"</li>
+      </ul>
+    </div>
+
+    <h3>The Golden Rule — When does Sliding Window work?</h3>
+    <div class="compare-grid">
+      <div class="compare-card good-card">
+        <h4 class="good">✅ Positives Only → Use Sliding Window</h4>
+        <pre>add right  → sum INCREASES
+remove left → sum DECREASES
+Direction is predictable!
+
+if sum > k → shrink from left
+if sum &lt; k → expand right</pre>
+      </div>
+      <div class="compare-card bad-card">
+        <h4 class="bad">❌ With Negatives → Window Breaks</h4>
+        <pre>add right  → sum could go UP or DOWN
+remove left → no guarantee
+
+Cannot predict direction
+→ Use Prefix Sum + HashMap instead</pre>
+      </div>
+    </div>
+
+    <h3>Variable Window Template</h3>
+    <pre>int left = 0, right = 0, sum = 0, maxLen = 0;
+
+while (right &lt; n) {
+    sum += arr[right];          // EXPAND window
+
+    while (sum > k) {           // SHRINK when violated
+        sum -= arr[left];
+        left++;
+    }
+
+    if (sum == k)
+        maxLen = max(maxLen, right - left + 1);
+
+    right++;
+}
+return maxLen;</pre>
+
+    <table>
+      <tr><th>Type</th><th>Approach</th><th>Example</th></tr>
+      <tr><td>Fixed size window</td><td>Add right, remove left simultaneously</td><td>Max sum of k elements</td></tr>
+      <tr><td>Variable size window</td><td>Expand right greedily, shrink left when violated</td><td>Longest subarray sum = k</td></tr>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 3: PREFIX SUM + HASHMAP -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <div class="section-icon icon-cyan">∑</div>
+      <div class="section-title">
+        <h2>3. Prefix Sum + HashMap</h2>
+        <p>Precompute cumulative sum/XOR — answer subarray queries in O(1)</p>
+      </div>
+    </div>
+
+    <h3>Problems Solved</h3>
+    <p>✅ Count Subarrays with Sum K &nbsp;·&nbsp; ✅ Longest Subarray with Sum K (negatives) &nbsp;·&nbsp; ✅ Largest Subarray Sum 0 &nbsp;·&nbsp; ✅ Count Subarrays XOR K</p>
+
+    <div class="signal-box">
+      <div class="label">🚨 Signal Words</div>
+      <ul>
+        <li>"Subarray sum/XOR equals k" (with negatives or zeros)</li>
+        <li>"Count/find subarrays with property"</li>
+        <li>"Can't use sliding window (negatives present)"</li>
+        <li>"Longest subarray with given sum"</li>
+      </ul>
+    </div>
+
+    <h3>The Core Identity</h3>
+    <pre>sum(i to j) = prefixSum[j] - prefixSum[i-1]
+
+So: prefixSum[j] - prefixSum[i-1] = k
+→   prefixSum[i-1] = prefixSum[j] - k
+
+For every j: "How many previous i's have prefixSum = current - k?"
+→ HashMap answers this in O(1)!</pre>
+
+    <h3>The 3 Critical Variants</h3>
+    <table>
+      <tr><th>Variant</th><th>Goal</th><th>Map Stores</th><th>Map Init</th><th>Map Update</th></tr>
+      <tr>
+        <td><strong>COUNT</strong> subarrays sum = k</td>
+        <td>count += map[sum - k]</td>
+        <td>prefixSum → frequency</td>
+        <td><code>{0 : 1}</code></td>
+        <td>map[sum]++ &nbsp;<span class="warn">(always)</span></td>
+      </tr>
+      <tr>
+        <td><strong>LONGEST</strong> subarray sum = k</td>
+        <td>maxLen = max(maxLen, i - map[sum-k])</td>
+        <td>prefixSum → first index</td>
+        <td><code>{0 : -1}</code></td>
+        <td>map[sum] = i &nbsp;<span class="good">(only if absent)</span></td>
+      </tr>
+      <tr>
+        <td><strong>COUNT</strong> subarrays XOR = k</td>
+        <td>count += map[xor ^ k]</td>
+        <td>prefixXOR → frequency</td>
+        <td><code>{0 : 1}</code></td>
+        <td>map[xor]++ &nbsp;<span class="warn">(always)</span></td>
+      </tr>
+    </table>
+
+    <div class="tip-box">
+      <div class="label">💡 Why {0:-1} vs {0:1}?</div>
+      <p><strong>Count variant {0:1}</strong> — empty prefix appeared once → correctly counts subarrays starting at index 0.</p>
+      <p><strong>Longest variant {0:-1}</strong> — empty prefix is "at index -1" → length = i - (-1) = i+1 = correct length starting from index 0.</p>
+    </div>
+
+    <h3>Code Templates</h3>
+    <pre>// VARIANT 1: Count subarrays with sum = k
+unordered_map&lt;int,int&gt; mp;
+mp[0] = 1;
+int sum = 0, count = 0;
+for (int x : arr) {
+    sum += x;
+    count += mp.count(sum - k) ? mp[sum - k] : 0;
+    mp[sum]++;              // always update
+}
+
+// VARIANT 2: Longest subarray with sum = k
+unordered_map&lt;int,int&gt; mp;
+mp[0] = -1;
+int sum = 0, maxLen = 0;
+for (int i = 0; i &lt; n; i++) {
+    sum += arr[i];
+    if (mp.count(sum - k)) maxLen = max(maxLen, i - mp[sum - k]);
+    if (!mp.count(sum)) mp[sum] = i;  // only first occurrence!
+}
+
+// VARIANT 3: Count subarrays with XOR = k
+unordered_map&lt;int,int&gt; mp;
+mp[0] = 1;
+int xr = 0, count = 0;
+for (int x : arr) {
+    xr ^= x;
+    count += mp.count(xr ^ k) ? mp[xr ^ k] : 0;
+    mp[xr]++;
+}</pre>
+
+    <h3>Sum vs XOR — Side by Side</h3>
+    <table>
+      <tr><th>Property</th><th>SUM version</th><th>XOR version</th></tr>
+      <tr><td>Prefix update</td><td><code>sum += arr[i]</code></td><td><code>xr ^= arr[i]</code></td></tr>
+      <tr><td>Look for</td><td><code>currentSum - k</code></td><td><code>currentXOR ^ k</code></td></tr>
+      <tr><td>Map init</td><td><code>{0: 1}</code></td><td><code>{0: 1}</code></td></tr>
+      <tr><td>Why 0?</td><td>empty sum = 0</td><td>empty XOR = 0</td></tr>
+      <tr><td>Inverse op</td><td>subtraction (−)</td><td>XOR (^) is self-inverse</td></tr>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 4: HASHSET/HASHMAP LOOKUP -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <div class="section-icon icon-green">🔍</div>
+      <div class="section-title">
+        <h2>4. HashSet / HashMap for Lookup</h2>
+        <p>O(1) existence checks instead of O(N) linear search</p>
+      </div>
+    </div>
+
+    <h3>Problems Solved</h3>
+    <p>✅ Longest Consecutive Sequence &nbsp;·&nbsp; ✅ Two Sum (unsorted) &nbsp;·&nbsp; ✅ Contains Duplicate</p>
+
+    <div class="signal-box">
+      <div class="label">🚨 Signal Words</div>
+      <ul>
+        <li>"Does this element exist in array?" asked repeatedly</li>
+        <li>"Find duplicates" / "Consecutive numbers"</li>
+        <li>"Two sum (unsorted)" / "Group elements by property"</li>
+      </ul>
+    </div>
+
+    <h3>The Core Trade-off</h3>
+    <pre>// Before: O(N) per existence check
+for (int j = 0; j &lt; n; j++)
+    if (arr[j] == target) return true;   // O(N) every time!
+
+// After: O(1) per existence check
+unordered_set&lt;int&gt; st(arr.begin(), arr.end());
+if (st.count(target)) ...               // O(1) every time!
+
+Trading O(N) space for O(N) time improvement per query.</pre>
+
+    <h3>Longest Consecutive Sequence — The Key Trick</h3>
+    <pre>// Only start counting from the ACTUAL start of a sequence
+// x is a start if (x-1) does NOT exist in the set
+
+for (int x : arr) {
+    if (!st.count(x - 1)) {      // x is start of sequence
+        int curr = x, len = 1;
+        while (st.count(curr + 1)) { curr++; len++; }
+        maxLen = max(maxLen, len);
+    }
+    // if x-1 exists → x is NOT a start → SKIP (avoid recount)
+}
+// Each element visited at most twice → O(N) total!</pre>
+
+    <div class="compare-grid">
+      <div class="compare-card">
+        <h4>HashSet — Existence Only</h4>
+        <pre>unordered_set&lt;int&gt; st;
+st.insert(5);
+st.count(5);   // → 1
+st.find(5);    // → iterator
+
+Used when: "Does X exist?"</pre>
+      </div>
+      <div class="compare-card">
+        <h4>HashMap — Existence + Value</h4>
+        <pre>unordered_map&lt;int,int&gt; mp;
+mp[5] = 3;
+mp.count(5);   // → 1
+mp[5];         // → 3
+
+Used when: "Does X exist AND what's
+its index/frequency?"</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 5: SORTING AS PREPROCESSING -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <div class="section-icon icon-yellow">🔢</div>
+      <div class="section-title">
+        <h2>5. Sorting as Preprocessing</h2>
+        <p>Sort once, unlock Two Pointers / Binary Search / easy duplicate handling</p>
+      </div>
+    </div>
+
+    <h3>Problems Solved</h3>
+    <p>✅ 3 Sum &nbsp;·&nbsp; ✅ 4 Sum &nbsp;·&nbsp; ✅ Union/Intersection &nbsp;·&nbsp; ✅ Next Permutation (sort suffix)</p>
+
+    <div class="signal-box">
+      <div class="label">🚨 Signal Words</div>
+      <ul>
+        <li>"Find pairs/triplets with given sum"</li>
+        <li>"Remove duplicates from result"</li>
+        <li>"Skip duplicate elements in input"</li>
+        <li>"Binary search needed on array"</li>
+      </ul>
+    </div>
+
+    <div class="tip-box">
+      <div class="label">💡 Rule of Thumb</div>
+      <p>If the <strong>order doesn't matter in the answer</strong> but <strong>sorted order helps find it</strong> → sort first. O(N log N) preprocessing is worth it when it unlocks O(N) or O(N²) instead of O(N²) or O(N³).</p>
+    </div>
+
+    <h3>What Sorting Unlocks</h3>
+    <table>
+      <tr><th>After Sorting You Get</th><th>Why</th></tr>
+      <tr><td>Two Pointers (direction logic)</td><td>Know which pointer to move based on relative size</td></tr>
+      <tr><td>Skip duplicates easily</td><td>Same values are adjacent → one comparison</td></tr>
+      <tr><td>Binary Search</td><td>Only works on sorted data</td></tr>
+      <tr><td>Greedy choices</td><td>Pick smallest/largest easily from ends</td></tr>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 6: BOYER-MOORE VOTING -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <div class="section-icon icon-red">🗳️</div>
+      <div class="section-title">
+        <h2>6. Boyer-Moore Voting Algorithm</h2>
+        <p>Find majority elements in O(N) time and O(1) space via cancellation</p>
+      </div>
+    </div>
+
+    <h3>Problems Solved</h3>
+    <p>✅ Majority Element I (&gt;N/2) &nbsp;·&nbsp; ✅ Majority Element II (&gt;N/3)</p>
+
+    <div class="signal-box">
+      <div class="label">🚨 Signal Words</div>
+      <ul>
+        <li>"Element appearing more than N/k times"</li>
+        <li>"Majority element" + "O(1) space required"</li>
+      </ul>
+    </div>
+
+    <h3>The Cancellation Insight</h3>
+    <pre>If majority element appears > N/2 times,
+even if every other element "votes against" it,
+it still survives cancellation!
+
+Think of it as an election:
+- Majority has more votes than ALL others combined
+- Cancel one majority vote with one minority vote
+- Majority still wins!</pre>
+
+    <table>
+      <tr><th>Threshold</th><th>Max Candidates</th><th>Counters Needed</th></tr>
+      <tr><td>&gt; N/2</td><td>1</td><td>1 (cand1, cnt1)</td></tr>
+      <tr><td>&gt; N/3</td><td>2</td><td>2 (cand1+cand2, cnt1+cnt2)</td></tr>
+      <tr><td>&gt; N/k</td><td>k-1</td><td>k-1</td></tr>
+    </table>
+
+    <h3>Two-Phase Template</h3>
+    <pre>// PHASE 1: Find candidates
+int cand1, cand2, cnt1 = 0, cnt2 = 0;
+for (int x : arr) {
+    if (x == cand1)       cnt1++;
+    else if (x == cand2)  cnt2++;
+    else if (cnt1 == 0) { cand1 = x; cnt1 = 1; }
+    else if (cnt2 == 0) { cand2 = x; cnt2 = 1; }
+    else { cnt1--; cnt2--; }     // cancellation!
+}
+
+// PHASE 2: Verify (candidates are NOT guaranteed!)
+cnt1 = cnt2 = 0;
+for (int x : arr) {
+    if (x == cand1) cnt1++;
+    else if (x == cand2) cnt2++;
+}
+if (cnt1 > n/3) result.push_back(cand1);
+if (cnt2 > n/3) result.push_back(cand2);</pre>
+
+    <div class="warn-box">
+      <div class="label">⚠️ Why Phase 2 is Mandatory</div>
+      <p>Phase 1 gives you CANDIDATES, not guarantees. arr=[1,2,3] has no majority, but phase 1 will still return some survivor. Always verify by counting.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 7: MATRIX MANIPULATION -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🧮</div>
+      <div class="section-title">
+        <h2>7. Matrix Manipulation Patterns</h2>
+        <p>Set Zeroes · Rotate · Spiral — each needs a different insight</p>
+      </div>
+    </div>
+
+    <h3>Problems Solved</h3>
+    <p>✅ Set Matrix Zeroes &nbsp;·&nbsp; ✅ Rotate Matrix 90° &nbsp;·&nbsp; ✅ Print Spiral Matrix</p>
+
+    <div class="variants">
+      <div class="variant-card">
+        <h4>Set Matrix Zeroes</h4>
+        <p>Signal: "Modify matrix based on existing values"</p>
+        <p>Rule: NEVER modify while reading → two-pass</p>
+        <pre>Pass 1: Record rows[] and cols[]
+        that need zeroing
+Pass 2: Apply zeroes
+
+O(1) space trick: use first
+row and first col as markers</pre>
+      </div>
+      <div class="variant-card">
+        <h4>Rotate Matrix 90°</h4>
+        <p>Signal: "Rotate N×N matrix in-place"</p>
+        <p>Mathematical identity to memorize:</p>
+        <pre>Clockwise 90°:
+  Step 1: Transpose
+  Step 2: Reverse each row
+
+Anti-clockwise 90°:
+  Step 1: Transpose
+  Step 2: Reverse each column</pre>
+      </div>
+      <div class="variant-card">
+        <h4>Spiral Matrix</h4>
+        <p>Signal: "Traverse layer by layer / onion peeling"</p>
+        <pre>4 boundaries:
+  top, bottom, left, right
+
+Each pass: go in one direction,
+shrink that boundary inward.
+
+Guard: check top&lt;=bottom and
+left&lt;=right before left/up pass</pre>
+      </div>
+    </div>
+
+    <h3>Rotate Matrix — Code</h3>
+    <pre>void rotate(vector&lt;vector&lt;int&gt;&gt;& matrix) {
+    int n = matrix.size();
+
+    // Step 1: Transpose (j starts from i+1 to avoid double-swap!)
+    for (int i = 0; i &lt; n; i++)
+        for (int j = i + 1; j &lt; n; j++)
+            swap(matrix[i][j], matrix[j][i]);
+
+    // Step 2: Reverse each row
+    for (int i = 0; i &lt; n; i++)
+        reverse(matrix[i].begin(), matrix[i].end());
+}</pre>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 8: SUFFIX/PREFIX TRAVERSAL -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <div class="section-icon icon-orange">↩️</div>
+      <div class="section-title">
+        <h2>8. Suffix / Prefix Traversal</h2>
+        <p>Carry running information about the suffix/prefix to avoid repeated scans</p>
+      </div>
+    </div>
+
+    <h3>Problems Solved</h3>
+    <p>✅ Leaders in Array (suffix max) &nbsp;·&nbsp; ✅ Next Permutation (find dip from right) &nbsp;·&nbsp; ✅ Check Sorted & Rotated (count drops)</p>
+
+    <div class="signal-box">
+      <div class="label">🚨 Signal Words</div>
+      <ul>
+        <li>"Greater than all elements to the RIGHT" → traverse right to left</li>
+        <li>"Find first decrease/increase from the right"</li>
+        <li>"Max/Min of everything on one side"</li>
+      </ul>
+    </div>
+
+    <div class="compare-grid">
+      <div class="compare-card">
+        <h4>Suffix Max (Right to Left)</h4>
+        <pre>int maxRight = INT_MIN;
+for (int i = n-1; i >= 0; i--) {
+    if (arr[i] >= maxRight) {
+        result.push_back(arr[i]); // leader!
+        maxRight = arr[i];
+    }
+}
+// Used in: Leaders in Array</pre>
+      </div>
+      <div class="compare-card">
+        <h4>Count Drop Points (Circular)</h4>
+        <pre>int drops = 0;
+for (int i = 0; i &lt; n; i++) {
+    if (nums[i] > nums[(i+1) % n])
+        drops++;
+}
+return drops &lt;= 1;
+// Used in: Check Sorted & Rotated</pre>
+      </div>
+    </div>
+
+    <h3>Next Permutation — 3-Step Algorithm</h3>
+    <pre>Step 1: Find "breakpoint" (dip) from right
+  → First i where arr[i] &lt; arr[i+1]
+
+Step 2: Find just-greater element from right
+  → Smallest element in suffix that is > arr[i]
+  → Swap it with arr[i]
+
+Step 3: Reverse the suffix after index i
+  → Suffix was descending → reversing makes it ascending (smallest)
+
+If no breakpoint found → already last permutation → reverse all</pre>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 9: MATHEMATICAL / FORMULA -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <div class="section-icon icon-cyan">📐</div>
+      <div class="section-title">
+        <h2>9. Mathematical / Formula-Based</h2>
+        <p>Leverage mathematical properties to avoid brute computation</p>
+      </div>
+    </div>
+
+    <h3>Problems Solved</h3>
+    <p>✅ Pascal's Triangle (nCr) &nbsp;·&nbsp; ✅ Rotate Matrix (position formula) &nbsp;·&nbsp; ✅ Majority Element</p>
+
+    <h3>Pascal's Triangle — 3 Question Types</h3>
+    <table>
+      <tr><th>Question Type</th><th>Approach</th><th>Time</th></tr>
+      <tr><td>Single element at (r, c)</td><td>nCr formula iteratively: <code>res = res*(n-i)/(i+1)</code></td><td><span class="cx cx-g">O(C)</span></td></tr>
+      <tr><td>Entire row r</td><td>Build each element from previous: <code>elem[j] = elem[j-1]*(n-j)/j</code></td><td><span class="cx cx-g">O(N)</span></td></tr>
+      <tr><td>Generate n rows</td><td>Build each row from previous row</td><td><span class="cx cx-y">O(N²)</span></td></tr>
+    </table>
+
+    <pre>// Generate all n rows
+vector&lt;vector&lt;int&gt;&gt; pascalTriangle(int n) {
+    vector&lt;vector&lt;int&gt;&gt; result;
+    for (int i = 1; i &lt;= n; i++) {
+        vector&lt;int&gt; row(i, 1);          // all 1s first
+        for (int j = 1; j &lt; i-1; j++)  // fill middle
+            row[j] = result[i-2][j-1] + result[i-2][j];
+        result.push_back(row);
+    }
+    return result;
+}</pre>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 10: HASHING COMPLEXITY DEEP DIVE -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <div class="section-icon icon-cyan">#</div>
+      <div class="section-title">
+        <h2>10. Hashing — Deep Dive into Complexity</h2>
+        <p>Every data structure, every operation, every pitfall</p>
+      </div>
+    </div>
+
+    <h3>How Hashing Works Internally</h3>
+    <pre>HashMap/HashSet = Array of BUCKETS
+
+Key → Hash Function → Bucket Index → store value there
+
+key = "apple"
+hashCode("apple") % 16 = 3  → store in bucket[3]
+
+bucket[0] → empty
+bucket[1] → empty
+bucket[2] → empty
+bucket[3] → ("apple", 5)   ← stored here
+bucket[4] → empty ...</pre>
+
+    <h3>Collision & Worst Case</h3>
+    <pre>COLLISION: Two keys map to same bucket
+
+key1 = "apple" → bucket[3]
+key2 = "mango" → bucket[3]  ← SAME BUCKET!
+
+Resolution: linked list in bucket
+bucket[3] → ("apple",5) → ("mango",3) → null
+
+NO collision  → O(1) lookup  (direct bucket access)
+WITH collision → O(N) lookup  (traverse linked list)
+
+Average case: collisions are rare → O(1)
+Worst case:   all keys collide   → O(N)</pre>
+
+    <div class="divider"></div>
+
+    <h3>📦 unordered_set&lt;int&gt;</h3>
+    <p style="color:var(--muted);margin-bottom:10px;">Hash table · No ordering · No duplicates</p>
+    <table>
+      <tr><th>Operation</th><th>Average</th><th>Worst</th><th>Example</th></tr>
+      <tr><td>insert(x)</td><td><span class="cx cx-g">O(1)</span></td><td><span class="cx cx-r">O(N)</span></td><td><code>st.insert(5)</code></td></tr>
+      <tr><td>find(x)</td><td><span class="cx cx-g">O(1)</span></td><td><span class="cx cx-r">O(N)</span></td><td><code>st.find(5)</code></td></tr>
+      <tr><td>count(x)</td><td><span class="cx cx-g">O(1)</span></td><td><span class="cx cx-r">O(N)</span></td><td><code>st.count(5)</code></td></tr>
+      <tr><td>erase(x)</td><td><span class="cx cx-g">O(1)</span></td><td><span class="cx cx-r">O(N)</span></td><td><code>st.erase(5)</code></td></tr>
+      <tr><td>size()</td><td><span class="cx cx-g">O(1)</span></td><td><span class="cx cx-g">O(1)</span></td><td><code>st.size()</code></td></tr>
+      <tr><td>clear()</td><td><span class="cx cx-y">O(N)</span></td><td><span class="cx cx-y">O(N)</span></td><td><code>st.clear()</code></td></tr>
+      <tr><td>Iteration</td><td><span class="cx cx-y">O(N)</span></td><td><span class="cx cx-y">O(N)</span></td><td><code>for(x : st)</code></td></tr>
+    </table>
+
+    <h3>📦 set&lt;int&gt; — Ordered Set (Red-Black Tree)</h3>
+    <p style="color:var(--muted);margin-bottom:10px;">Red-Black Tree · Always sorted · No duplicates · Guaranteed O(log N)</p>
+    <table>
+      <tr><th>Operation</th><th>Time</th><th>Example</th><th>Special Feature</th></tr>
+      <tr><td>insert(x)</td><td><span class="cx cx-y">O(log N)</span></td><td><code>st.insert(5)</code></td><td>—</td></tr>
+      <tr><td>find(x)</td><td><span class="cx cx-y">O(log N)</span></td><td><code>st.find(5)</code></td><td>—</td></tr>
+      <tr><td>count(x)</td><td><span class="cx cx-y">O(log N)</span></td><td><code>st.count(5)</code></td><td>—</td></tr>
+      <tr><td>erase(x)</td><td><span class="cx cx-y">O(log N)</span></td><td><code>st.erase(5)</code></td><td>—</td></tr>
+      <tr><td>lower_bound(x)</td><td><span class="cx cx-y">O(log N)</span></td><td><code>st.lower_bound(5)</code></td><td>✅ First element &gt;= x</td></tr>
+      <tr><td>upper_bound(x)</td><td><span class="cx cx-y">O(log N)</span></td><td><code>st.upper_bound(5)</code></td><td>✅ First element &gt; x</td></tr>
+      <tr><td>begin() / end()</td><td><span class="cx cx-g">O(1)</span></td><td><code>*st.begin()</code></td><td>✅ Min element</td></tr>
+    </table>
+
+    <h3>📦 unordered_map&lt;int,int&gt;</h3>
+    <p style="color:var(--muted);margin-bottom:10px;">Hash table · Key-Value pairs · No ordering</p>
+    <table>
+      <tr><th>Operation</th><th>Average</th><th>Worst</th><th>Example</th></tr>
+      <tr><td>mp[key] = val</td><td><span class="cx cx-g">O(1)</span></td><td><span class="cx cx-r">O(N)</span></td><td>insert or update</td></tr>
+      <tr><td>mp[key]</td><td><span class="cx cx-g">O(1)</span></td><td><span class="cx cx-r">O(N)</span></td><td>⚠️ CREATES entry if absent!</td></tr>
+      <tr><td>find(key)</td><td><span class="cx cx-g">O(1)</span></td><td><span class="cx cx-r">O(N)</span></td><td><code>mp.find(k) != mp.end()</code></td></tr>
+      <tr><td>count(key)</td><td><span class="cx cx-g">O(1)</span></td><td><span class="cx cx-r">O(N)</span></td><td><code>mp.count(k)</code> → 0 or 1</td></tr>
+      <tr><td>erase(key)</td><td><span class="cx cx-g">O(1)</span></td><td><span class="cx cx-r">O(N)</span></td><td><code>mp.erase(k)</code></td></tr>
+      <tr><td>Iteration</td><td><span class="cx cx-y">O(N)</span></td><td><span class="cx cx-y">O(N)</span></td><td><code>for(auto&amp; [k,v]:mp)</code></td></tr>
+    </table>
+
+    <div class="warn-box">
+      <div class="label">⚠️ DANGEROUS TRAP — mp[key] creates entry!</div>
+      <pre>unordered_map&lt;int,int&gt; mp;
+
+// WRONG — creates entry {5:0} even if 5 wasn't in map!
+if (mp[5] == 0) { ... }
+
+// CORRECT — use count() or find()
+if (mp.count(5)) { ... }           // returns 0 or 1
+if (mp.find(5) != mp.end()) { ... } // iterator check</pre>
+    </div>
+
+    <h3>📦 map&lt;int,int&gt; — Ordered Map (Red-Black Tree)</h3>
+    <p style="color:var(--muted);margin-bottom:10px;">Sorted keys · Guaranteed O(log N) · No hash collision risk</p>
+    <table>
+      <tr><th>Operation</th><th>Time</th><th>Notes</th></tr>
+      <tr><td>insert / mp[k]=v</td><td><span class="cx cx-y">O(log N)</span></td><td>Guaranteed, no worst case</td></tr>
+      <tr><td>find(key)</td><td><span class="cx cx-y">O(log N)</span></td><td>Guaranteed</td></tr>
+      <tr><td>lower_bound(key)</td><td><span class="cx cx-y">O(log N)</span></td><td>✅ Available (unlike unordered)</td></tr>
+      <tr><td>begin() / rbegin()</td><td><span class="cx cx-g">O(1)</span></td><td>Min / Max key directly</td></tr>
+      <tr><td>Iteration</td><td><span class="cx cx-y">O(N)</span></td><td>Always in sorted key order</td></tr>
+    </table>
+
+    <h3>📦 multiset&lt;int&gt;</h3>
+    <p style="color:var(--muted);margin-bottom:10px;">Like set but allows duplicates</p>
+    <table>
+      <tr><th>Operation</th><th>Time</th><th>Notes</th></tr>
+      <tr><td>insert(x)</td><td><span class="cx cx-y">O(log N)</span></td><td>Always inserts (even duplicates)</td></tr>
+      <tr><td>find(x)</td><td><span class="cx cx-y">O(log N)</span></td><td>Returns iterator to ONE copy</td></tr>
+      <tr><td>count(x)</td><td><span class="cx cx-y">O(log N + k)</span></td><td>k = number of occurrences</td></tr>
+      <tr><td>erase(value)</td><td><span class="cx cx-r">O(log N + k)</span></td><td>⚠️ Removes ALL copies!</td></tr>
+      <tr><td>erase(iterator)</td><td><span class="cx cx-y">O(log N)</span></td><td>✅ Removes only ONE copy</td></tr>
+    </table>
+
+    <div class="warn-box">
+      <div class="label">⚠️ CRITICAL MULTISET TRAP</div>
+      <pre>multiset&lt;int&gt; ms = {1, 2, 2, 2, 3};
+
+ms.erase(2);                    // ❌ REMOVES ALL three 2s!
+// ms = {1, 3}
+
+// CORRECT: remove just ONE copy
+auto it = ms.find(2);
+if (it != ms.end()) ms.erase(it);  // ✅ removes only ONE
+// ms = {1, 2, 2, 3}</pre>
+    </div>
+
+    <h3>📦 priority_queue — Binary Heap</h3>
+    <p style="color:var(--muted);margin-bottom:10px;">Max-heap by default · Always gives max in O(1)</p>
+    <table>
+      <tr><th>Operation</th><th>Time</th><th>Notes</th></tr>
+      <tr><td>push(x)</td><td><span class="cx cx-y">O(log N)</span></td><td>Insert + heapify up</td></tr>
+      <tr><td>pop()</td><td><span class="cx cx-y">O(log N)</span></td><td>Remove top + heapify down</td></tr>
+      <tr><td>top()</td><td><span class="cx cx-g">O(1)</span></td><td>Peek max (or min) — no removal</td></tr>
+      <tr><td>size() / empty()</td><td><span class="cx cx-g">O(1)</span></td><td>—</td></tr>
+      <tr><td>Build from array</td><td><span class="cx cx-g">O(N)</span></td><td>Not O(N log N)!</td></tr>
+    </table>
+
+    <pre>priority_queue&lt;int&gt; maxPQ;                              // max-heap (default)
+priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; minPQ;  // min-heap</pre>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- MASTER COMPARISON TABLE -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-green">⚖️</div>
+      <div class="section-title">
+        <h2>The Big Comparison Table</h2>
+        <p>All data structures side by side</p>
+      </div>
+    </div>
+
+    <table>
+      <tr>
+        <th>Structure</th>
+        <th>Insert</th>
+        <th>Search</th>
+        <th>Delete</th>
+        <th>Order</th>
+        <th>Extra Features</th>
+      </tr>
+      <tr>
+        <td><code>unordered_set</code></td>
+        <td><span class="cx cx-g">O(1) avg</span></td>
+        <td><span class="cx cx-g">O(1) avg</span></td>
+        <td><span class="cx cx-g">O(1) avg</span></td>
+        <td class="bad">No</td>
+        <td>Fast, no order, no dups</td>
+      </tr>
+      <tr>
+        <td><code>set</code></td>
+        <td><span class="cx cx-y">O(log N)</span></td>
+        <td><span class="cx cx-y">O(log N)</span></td>
+        <td><span class="cx cx-y">O(log N)</span></td>
+        <td class="good">Sorted</td>
+        <td>lower_bound, upper_bound</td>
+      </tr>
+      <tr>
+        <td><code>unordered_map</code></td>
+        <td><span class="cx cx-g">O(1) avg</span></td>
+        <td><span class="cx cx-g">O(1) avg</span></td>
+        <td><span class="cx cx-g">O(1) avg</span></td>
+        <td class="bad">No</td>
+        <td>Fast key-value pairs</td>
+      </tr>
+      <tr>
+        <td><code>map</code></td>
+        <td><span class="cx cx-y">O(log N)</span></td>
+        <td><span class="cx cx-y">O(log N)</span></td>
+        <td><span class="cx cx-y">O(log N)</span></td>
+        <td class="good">Sorted keys</td>
+        <td>lower_bound, rbegin()</td>
+      </tr>
+      <tr>
+        <td><code>multiset</code></td>
+        <td><span class="cx cx-y">O(log N)</span></td>
+        <td><span class="cx cx-y">O(log N)</span></td>
+        <td><span class="cx cx-y">O(log N)</span></td>
+        <td class="good">Sorted</td>
+        <td>Allows duplicates</td>
+      </tr>
+      <tr>
+        <td><code>priority_queue</code></td>
+        <td><span class="cx cx-y">O(log N)</span></td>
+        <td><span class="cx cx-g">O(1) top</span></td>
+        <td><span class="cx cx-y">O(log N)</span></td>
+        <td class="warn">Heap order</td>
+        <td>Always get max/min</td>
+      </tr>
+      <tr>
+        <td><code>vector</code></td>
+        <td><span class="cx cx-g">O(1)*</span></td>
+        <td><span class="cx cx-r">O(N)</span></td>
+        <td><span class="cx cx-r">O(N)</span></td>
+        <td class="warn">Insertion</td>
+        <td>O(1) index access</td>
+      </tr>
+    </table>
+    <p style="color:var(--muted);font-size:0.82rem;">* vector push_back is amortized O(1)</p>
+
+    <h3>When to Use Which?</h3>
+    <table>
+      <tr><th>Need</th><th>Use</th><th>Why</th></tr>
+      <tr><td>Fast lookup, order doesn't matter</td><td><code>unordered_set / unordered_map</code></td><td>O(1) average</td></tr>
+      <tr><td>Sorted iteration or nearest element</td><td><code>set / map</code></td><td>lower_bound, upper_bound available</td></tr>
+      <tr><td>Allow duplicate values</td><td><code>multiset</code></td><td>Sorted with duplicates</td></tr>
+      <tr><td>Always need max or min quickly</td><td><code>priority_queue</code></td><td>O(1) peek, O(log N) push/pop</td></tr>
+      <tr><td>Guaranteed O(log N) — no collision risk</td><td><code>map / set</code></td><td>Red-Black Tree, deterministic</td></tr>
+      <tr><td>Frequency counting</td><td><code>unordered_map&lt;int,int&gt;</code></td><td>mp[x]++ in O(1)</td></tr>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- DECISION TREE -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="decision">
+    <div class="section-header">
+      <div class="section-icon icon-yellow">🌳</div>
+      <div class="section-title">
+        <h2>Master Decision Tree</h2>
+        <p>Given any problem, follow these questions to find the right pattern</p>
+      </div>
+    </div>
+
+<div class="tree-box"><span style="color:#a78bfa">Given a problem, ask IN ORDER:</span>
+
+<span style="color:#67e8f9">Q1: Is it about SUBARRAYS?</span>
+│
+├── Sum/XOR equals K?
+│     ├── COUNT subarrays  ──────────────► <span style="color:#4ade80">Prefix Sum + Map (frequency)</span>
+│     └── LONGEST subarray
+│           ├── Only positives? ─────────► <span style="color:#4ade80">Sliding Window</span>
+│           └── Has negatives?  ─────────► <span style="color:#4ade80">Prefix Sum + Map (first index)</span>
+│
+└── Other subarray property?
+      └── Usually Two Pointers or Sorting
+
+<span style="color:#67e8f9">Q2: Find PAIRS/TRIPLETS summing to target?</span>
+│
+├── 2 elements ─────────────────────────► <span style="color:#4ade80">Two Pointers (sorted) / HashMap (unsorted)</span>
+├── 3 elements ─────────────────────────► <span style="color:#4ade80">Fix 1 + Two Pointers</span>
+└── 4 elements ─────────────────────────► <span style="color:#4ade80">Fix 2 + Two Pointers</span>
+
+<span style="color:#67e8f9">Q3: Repeated EXISTENCE CHECK?</span>
+│
+└── "Does X exist?" many times ─────────► <span style="color:#4ade80">HashSet / HashMap</span>
+
+<span style="color:#67e8f9">Q4: MAJORITY / FREQUENCY?</span>
+│
+└── > N/k times, O(1) space ───────────► <span style="color:#4ade80">Boyer-Moore Voting</span>
+
+<span style="color:#67e8f9">Q5: MATRIX problem?</span>
+│
+├── Mark rows/cols ──────────────────────► <span style="color:#4ade80">Two-pass (collect → apply)</span>
+├── Rotate ──────────────────────────────► <span style="color:#4ade80">Transpose + Reverse rows</span>
+└── Spiral/Layer ────────────────────────► <span style="color:#4ade80">Boundary pointers (top/bot/left/right)</span>
+
+<span style="color:#67e8f9">Q6: Info about RIGHT SIDE of each element?</span>
+│
+└── "Greater than all to right" ─────────► <span style="color:#4ade80">Traverse Right to Left (suffix max)</span></div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- CHEAT SHEET -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="cheatsheet">
+    <div class="section-header">
+      <div class="section-icon icon-green">📊</div>
+      <div class="section-title">
+        <h2>Complexity Cheat Sheet</h2>
+        <p>All patterns summarized — quick revision reference</p>
+      </div>
+    </div>
+
+    <table>
+      <tr><th>#</th><th>Algorithm</th><th>Time</th><th>Space</th><th>Key Condition</th></tr>
+      <tr>
+        <td>1</td><td>Two Pointers</td>
+        <td><span class="cx cx-g">O(N)</span></td>
+        <td><span class="cx cx-g">O(1)</span></td>
+        <td>Sorted array</td>
+      </tr>
+      <tr>
+        <td>2</td><td>Sliding Window</td>
+        <td><span class="cx cx-g">O(N)</span></td>
+        <td><span class="cx cx-g">O(1)</span></td>
+        <td>Only positive numbers</td>
+      </tr>
+      <tr>
+        <td>3</td><td>Prefix Sum + Map (count)</td>
+        <td><span class="cx cx-g">O(N)</span></td>
+        <td><span class="cx cx-y">O(N)</span></td>
+        <td>Any values, count subarrays</td>
+      </tr>
+      <tr>
+        <td>4</td><td>Prefix Sum + Map (longest)</td>
+        <td><span class="cx cx-g">O(N)</span></td>
+        <td><span class="cx cx-y">O(N)</span></td>
+        <td>Has negatives/zeros</td>
+      </tr>
+      <tr>
+        <td>5</td><td>HashSet Lookup</td>
+        <td><span class="cx cx-g">O(N)</span></td>
+        <td><span class="cx cx-y">O(N)</span></td>
+        <td>Existence queries</td>
+      </tr>
+      <tr>
+        <td>6</td><td>Boyer-Moore Voting</td>
+        <td><span class="cx cx-g">O(N)</span></td>
+        <td><span class="cx cx-g">O(1)</span></td>
+        <td>Majority element queries</td>
+      </tr>
+      <tr>
+        <td>7</td><td>Sort + Two Pointers</td>
+        <td><span class="cx cx-y">O(N²)</span></td>
+        <td><span class="cx cx-g">O(1)</span></td>
+        <td>k-Sum problems</td>
+      </tr>
+      <tr>
+        <td>8</td><td>Suffix/Prefix Traversal</td>
+        <td><span class="cx cx-g">O(N)</span></td>
+        <td><span class="cx cx-g">O(1)</span></td>
+        <td>Right/Left side information</td>
+      </tr>
+      <tr>
+        <td>9</td><td>Matrix Two-Pass</td>
+        <td><span class="cx cx-y">O(M×N)</span></td>
+        <td><span class="cx cx-g">O(1)</span></td>
+        <td>In-place matrix modification</td>
+      </tr>
+      <tr>
+        <td>10</td><td>Spiral Matrix</td>
+        <td><span class="cx cx-y">O(M×N)</span></td>
+        <td><span class="cx cx-g">O(1)</span></td>
+        <td>Layer-by-layer traversal</td>
+      </tr>
+    </table>
+
+    <h3>Common Pitfalls Summary</h3>
+    <table>
+      <tr><th>Pitfall</th><th>Wrong</th><th>Correct</th></tr>
+      <tr>
+        <td>Check map key existence</td>
+        <td><code class="bad">if(mp[key]==0)</code></td>
+        <td><code class="good">if(mp.count(key))</code></td>
+      </tr>
+      <tr>
+        <td>Remove one multiset element</td>
+        <td><code class="bad">ms.erase(val)</code></td>
+        <td><code class="good">ms.erase(ms.find(val))</code></td>
+      </tr>
+      <tr>
+        <td>Longest subarray map update</td>
+        <td><code class="bad">mp[sum] = i (always)</code></td>
+        <td><code class="good">if(!mp.count(sum)) mp[sum]=i</code></td>
+      </tr>
+      <tr>
+        <td>Transpose matrix (avoid double-swap)</td>
+        <td><code class="bad">for j=0 to n</code></td>
+        <td><code class="good">for j=i+1 to n</code></td>
+      </tr>
+      <tr>
+        <td>4 Sum overflow</td>
+        <td><code class="bad">int sum = a+b+c+d</code></td>
+        <td><code class="good">long long sum = a+b+c+d</code></td>
+      </tr>
+      <tr>
+        <td>Boyer-Moore without verify</td>
+        <td class="bad">Return candidate directly</td>
+        <td class="good">Always do Phase 2 count verification</td>
+      </tr>
+    </table>
+
+    <h3>The Upgrade Ladder</h3>
+    <pre>Every problem follows this improvement path:
+
+O(N³) → O(N²) → O(N log N) → O(N) → O(1) space
+
+At each step ask:
+  "What am I RECOMPUTING that I could PRECOMPUTE?"
+  "What am I SEARCHING that I could STORE?"
+
+Recomputing inner loop sum → Carry running sum     (N³ → N²)
+Searching for element      → HashSet               (N² → N)
+Need ordering + no hash risk → map instead of unordered_map</pre>
+  </div>
+
+</div><!-- end container -->
+
+<footer>
+  <p>DSA Master Guide · Striver A–Z Series · <span>Algorithm Patterns & Hashing Complexity</span></p>
+  <p style="margin-top:6px;">Two Pointers · Sliding Window · Prefix Sum · HashSet · Sorting · Boyer-Moore · Matrix · Suffix Traversal · Mathematical</p>
+</footer>
+
+</body>
+</html>

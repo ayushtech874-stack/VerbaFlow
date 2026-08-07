@@ -43,4 +43,6 @@ next-env.d.ts
 # standalone html guides & journal markdown (excluded from git push)
 public/*.html
 journal.md
-
+# generated printable PDF and HTML files
+DSA_Master_Guide_Printable.pdf
+printable.html

@@ -16,8 +16,11 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "VerbaFlow | Impromptu Speaking & Eloquence Studio",
+  title: "VerbaFlow",
   description: "Master spontaneous public speaking with 1,300+ prompts, AI research briefings, and fluency analytics.",
+  verification: {
+    google: "uWaKXvizX7DpjnXm4070Pe9NJ2DSn1xtF2Ofx36Xtp4",
+  },
   icons: {
     icon: [
       { url: "/logo.jpg", type: "image/jpeg" },
@@ -36,6 +39,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`dark ${playfair.variable} ${inter.variable} h-full antialiased`}
     >
       <head>
+        <title>VerbaFlow</title>
+        <meta name="google-site-verification" content="uWaKXvizX7DpjnXm4070Pe9NJ2DSn1xtF2Ofx36Xtp4" />
         <link rel="icon" href="/logo.jpg" type="image/jpeg" />
         <link rel="shortcut icon" href="/logo.jpg" type="image/jpeg" />
         <link rel="apple-touch-icon" href="/logo.jpg" />

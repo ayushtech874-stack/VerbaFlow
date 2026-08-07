@@ -24,17 +24,29 @@ export default function ProfilePage() {
     return () => subscription.unsubscribe();
   }, []);
 
+  const [authError, setAuthError] = useState<string | null>(null);
+
   const handleGoogleSignIn = async () => {
+    setAuthError(null);
+    setLoading(true);
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: typeof window !== "undefined" ? `${window.location.origin}/profile` : undefined
-        }
+          queryParams: {
+            prompt: "select_account",
+          },
+          redirectTo: typeof window !== "undefined" ? `${window.location.origin}/profile` : undefined,
+        },
       });
       if (error) throw error;
     } catch (err: any) {
+      console.error("Google auth error:", err);
+      setAuthError(err.message || "Failed to connect to Google OAuth.");
+      // Fallback for local demo preview if Supabase provider credentials aren't configured yet
       setDemoLoggedInUser("ayushtech874@gmail.com");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -123,8 +135,22 @@ export default function ProfilePage() {
           {/* Sign In Options when NOT logged in */}
           {!activeEmail && (
             <div className="space-y-4 pt-4 border-t border-black/15 dark:border-white/15 max-w-md mx-auto text-center">
-              <button onClick={handleGoogleSignIn} className="btn-zorayda w-full justify-center text-sm py-3">
-                <UserCheck className="w-4 h-4" /> Sign In with Google Account
+              {authError && (
+                <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-xs font-semibold text-left">
+                  ⚠️ <strong>Supabase Provider Note:</strong> {authError}
+                  <div className="mt-1 text-[11px] opacity-90">
+                    Falling back to Active Demo Session. Enable <strong>Google Provider</strong> in Supabase Dashboard → Auth → Providers.
+                  </div>
+                </div>
+              )}
+
+              <button
+                onClick={handleGoogleSignIn}
+                disabled={loading}
+                className="w-full bg-white text-black hover:bg-neutral-200 active:scale-[0.99] font-bold text-xs tracking-widest uppercase py-3.5 px-6 rounded-full flex items-center justify-center gap-2.5 shadow-md transition-all border border-black/10 cursor-pointer"
+              >
+                <UserCheck className="w-4 h-4 text-black" />
+                <span>{loading ? "CONNECTING..." : "SIGN IN WITH GOOGLE ACCOUNT"}</span>
               </button>
 
               <div className="flex items-center gap-3 my-2 text-xs font-bold text-[#444444] dark:text-[#aaaaaa]">
