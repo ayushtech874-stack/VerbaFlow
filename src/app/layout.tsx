@@ -23,10 +23,10 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/logo.jpg", type: "image/jpeg" },
-      { url: "/favicon.ico" }
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/logo.jpg", type: "image/jpeg" }
     ],
-    shortcut: "/logo.jpg",
+    shortcut: "/favicon.ico",
     apple: "/logo.jpg",
   },
 };
@@ -41,8 +41,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <title>VerbaFlow</title>
         <meta name="google-site-verification" content="uWaKXvizX7DpjnXm4070Pe9NJ2DSn1xtF2Ofx36Xtp4" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/logo.jpg" type="image/jpeg" />
-        <link rel="shortcut icon" href="/logo.jpg" type="image/jpeg" />
+        <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/logo.jpg" />
       </head>
       <body className="min-h-full flex flex-col font-sans transition-colors duration-200 bg-[#0e0d0b] text-[#ffffff]">
