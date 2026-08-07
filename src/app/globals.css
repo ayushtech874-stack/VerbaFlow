@@ -1,0 +1,173 @@
+@import "tailwindcss";
+
+/* PERMANENT DARK THEME & CROSS-PLATFORM RESPONSIVE ACCESSIBILITY SYSTEM */
+:root {
+  --background: #0e0d0b;
+  --foreground: #ffffff;
+  --card: #181614;
+  --card-foreground: #ffffff;
+  --primary: #d4af37;
+  --border: rgba(255, 255, 255, 0.25);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0e0d0b !important;
+  color: #ffffff !important;
+  font-family: var(--font-sans), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23d4af37' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3 3 7 18 3-7 7-3L3 3z'/%3E%3Ccircle cx='13' cy='13' r='2' fill='%23d4af37'/%3E%3C/svg%3E"), auto !important;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* ELEGANT CUSTOM POINTER CURSOR FOR INTERACTIVE ELEMENTS */
+a, button, input, select, textarea, [role="button"] {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%23d4af37' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3 3 7 18 3-7 7-3L3 3z'/%3E%3C/svg%3E"), pointer !important;
+  touch-action: manipulation;
+}
+
+/* ELEGANT OBSIDIAN & GOLD SCROLLBAR STYLING */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0e0d0b;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #33302b 0%, #d4af37 100%);
+  border-radius: 9999px;
+  border: 2px solid #0e0d0b;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d4af37;
+}
+
+/* Firefox Scrollbar Support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #d4af37 #0e0d0b;
+  box-sizing: border-box;
+}
+
+/* REMOVE NUMBER INPUT SPINNER ARROWS (CHROME, SAFARI, EDGE, OPERA, FIREFOX) */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* RESPONSIVE CARDS */
+.card-zorayda {
+  background-color: #181614 !important;
+  color: #ffffff !important;
+  border: 2px solid rgba(255, 255, 255, 0.25) !important;
+  border-radius: 24px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+  max-width: 100%;
+}
+
+@media (max-width: 640px) {
+  .card-zorayda {
+    padding: 1.25rem !important;
+    border-radius: 18px !important;
+  }
+}
+
+.card-zorayda h1,
+.card-zorayda h2,
+.card-zorayda h3,
+.card-zorayda h4,
+.card-zorayda h5,
+.card-zorayda h6 {
+  color: #ffffff !important;
+  word-break: break-word;
+}
+
+.card-zorayda p {
+  color: #e5e5e5 !important;
+  word-break: break-word;
+}
+
+/* BUTTONS */
+.btn-zorayda {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 2px solid #ffffff !important;
+  padding: 0.65rem 1.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: opacity 0.2s ease;
+  white-space: normal;
+  text-align: center;
+  max-width: 100%;
+}
+
+.btn-zorayda:hover {
+  opacity: 0.9;
+}
+
+.btn-zorayda-outline {
+  background-color: transparent !important;
+  color: #ffffff !important;
+  border: 2px solid rgba(255, 255, 255, 0.4) !important;
+  padding: 0.65rem 1.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: border-color 0.2s ease;
+  white-space: normal;
+  text-align: center;
+  max-width: 100%;
+}
+
+.btn-zorayda-outline:hover {
+  border-color: #d4af37 !important;
+}
+
+/* DEBATE AI BUBBLE */
+.debate-ai-bubble {
+  background-color: #22201c !important;
+  color: #ffffff !important;
+  border: 2px solid #d4af37 !important;
+}
+
+.debate-ai-bubble p,
+.debate-ai-bubble span {
+  color: #ffffff !important;
+  font-weight: 800 !important;
+}
+
+/* RECHARTS ACCESSIBILITY */
+.recharts-text,
+.recharts-cartesian-axis-tick-value,
+.recharts-polar-angle-axis-tick-value tspan {
+  fill: #ffffff !important;
+  font-weight: 700 !important;
+}

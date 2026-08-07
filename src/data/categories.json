@@ -1,0 +1,173 @@
+[
+  {
+    "category": "Intellectual & Analytical",
+    "genres": [
+      {
+        "id": "indian_history",
+        "name": "Indian History",
+        "description": "Explore India’s past, civilizations, freedom struggle, and historical transformations.",
+        "topics": ["Indus Valley Civilization & Urban Planning", "Vedic Age and Social Structure", "Rise of the Mauryan Empire", "Ashoka and his Dhamma Policies", "Gupta Empire: The Golden Age", "Harsha’s Reign and Cultural Synthesis", "Delhi Sultanate Administration", "Mughal Empire: Art, Architecture & Governance", "Akbar’s Religious Policy (Din-i-Ilahi)", "Chhatrapati Shivaji & Maratha Empire", "Decline of the Mughal Empire", "European Trading Companies in India", "Battle of Plassey (1757) Impact", "British Expansion & Subsidiary Alliance", "Economic Drain of India under British Rule", "19th Century Social Reform Movements", "Role of Raja Ram Mohan Roy in Renaissance", "Formation of Indian National Congress (1885)", "Partition of Bengal (1905) & Swadeshi Movement", "Revolutionary Movements: Bhagat Singh & Azad", "Role of Subhas Chandra Bose & INA", "Quit India Movement (1942)", "Jallianwala Bagh Massacre Impact", "Role of Women in India’s Freedom Struggle", "Non-Cooperation Movement Dynamics", "Civil Disobedience Movement & Salt March", "Role of Vernacular Press in Awakening", "Partition of India (1947) & Tragedies", "Integration of Princely States by Sardar Patel", "Framing of the Indian Constitution", "Post-Independence Challenges (1947-1960)", "The Green Revolution & Agricultural Growth", "The White Revolution & Dairy Co-operatives", "The Emergency Period (1975-1977)", "Economic Liberalization of 1991", "Evolution of India’s Foreign Policy (NAM)", "Ancient Trade Routes: Silk Route & Maritime", "Impact of Foreign Invasions on Culture", "Lesser-Known Freedom Fighters", "Preserving Historical Monuments & Heritage", "Bhakti and Sufi Movements", "Chola Dynasty Maritime Achievements", "Revolt of 1857: First War of Independence", "Role of Tribal Uprisings in Colonial Era", "Ancient Indian Universities: Nalanda & Taxila", "Evolution of Indian Classical Music & Dance", "The Vijayanagara Empire Legacy", "Post-Independence Wars & National Defense", "Role of Science & Technology in Ancient India", "Historical Lessons for Modern Governance"]
+      },
+      {
+        "id": "indian_politics",
+        "name": "Indian Politics",
+        "description": "Understand political systems, governance, elections, and leadership in India.",
+        "topics": ["Structure of Indian Parliamentary Democracy", "Role & Powers of the Prime Minister", "Role & Powers of the President", "Lok Sabha vs Rajya Sabha Dynamics", "Election Commission of India & Fair Polls", "Voting Systems: First-Past-The-Post in India", "Coalition Politics & Era of Alliances", "Rise & Influence of Regional Political Parties", "Major Political Ideologies in Modern India", "Role of Opposition in a Strong Democracy", "Media & Politics: The Fourth Pillar", "Judiciary Independence vs Judicial Activism", "Corruption in Politics & Electoral Funding", "Role of Youth in Transforming Politics", "Women Representation in Parliament", "Political Campaign Strategies & Social Media", "Electoral Reforms & One Nation One Election", "Public Policy Making & Implementation Gaps", "Federalism in India: Centre-State Relations", "Role of Bureaucracy (IAS/IPS) in Governance", "Right to Vote & Citizen Accountability", "Role of Civil Society & NGOs in Policy", "Debate Culture in Indian Parliament", "Economic Policies & Political Manifestos", "Foreign Policy Decisions & Party Stances", "National Security & Domestic Politics", "Political Ethics & Criminalization of Politics", "Grassroots Politics: Panchayati Raj System", "Urban Local Body Governance Challenges", "Development Politics vs Identity Politics", "Secularism in Modern Indian Politics", "Public Protests & Democratic Rights", "Role of Opinion Polls & Exit Polls", "Anti-Defection Law & Horse-Trading Concerns", "Dynastic Politics vs Meritocracy", "Freebies Culture vs Sustainable Welfare", "Judicial Review of Executive Decisions", "Role of Governor in State Politics", "Digital Governance & Direct Benefit Transfer", "Polarization & Social Harmony", "Electoral Bonds & Financial Transparency", "Political Communication & Rhetoric", "Role of Think Tanks in Policy Formation", "Decentralization of Power in India", "Nationalism vs Globalism in Indian Politics", "Future of Multi-Party System in India", "Influence of Caste & Religion on Voting", "Role of Student Unions in Indian Politics", "Criminal Record Disclosure of Candidates", "Improving Governance Transparency in India"]
+      },
+      {
+        "id": "indian_independence",
+        "name": "Indian Independence (Pre & Post)",
+        "description": "Study events before and after independence shaping modern India.",
+        "topics": ["Pre-Independence Resistance Movements", "Post-Independence Economic Integration", "Role of Sardar Patel in Princely Integration", "1962 Border Conflict & Foreign Policy Shift", "1971 Liberation War & Strategic Diplomacy", "Architectural Legacy of Independence Era", "Role of Vernacular Press in National Mobilization", "Simla Agreement & Bilateral Treaties", "Evolution of Non-Aligned Movement (NAM)", "Post-1947 Refugee Settlement & Social Integration", "Constitutional Debates on National Language", "Industrial Policies of 1956 & Public Sector Era", "Evolution of Atomic Energy Program under Bhabha", "Space Research Foundations (ISRO Evolution)", "The Tashkent Declaration Context", "Role of Peasant Revolts in Freedom Movement", "Trade Union Movements in Pre-Independence Era", "Post-Colonial Bureaucracy Structure", "Educational Reforms in Independent India", "Evolution of Banking Sector Post-1947", "Sino-Indian Relations Historical Perspective", "Evolution of Kashmir Policy Post-1947", "The Tashkent Agreement Impact", "Linguistic Reorganization of States (1956)", "Role of All India Radio in National Unity", "Evolution of Election Machinery Post-1951", "Green Revolution Policy Formation", "Operation Flood & White Revolution", "Nationalization of Banks in 1969", "The 1974 Pokhran-I Nuclear Test", "1975 Emergency Declaration Analysis", "Post-Emergency Democratic Restoration (1977)", "SARKARIA Commission on Centre-State Relations", "1991 Economic Reforms & Liberalization Trigger", "Evolution of India-US Bilateral Relations", "Evolution of India-Russia Strategic Alliance", "Look East Policy Origin & Asian Integration", "Kargil Conflict (1999) Military & Diplomatic Lessons", "Creation of New States (Jharkhand, CG, UK in 2000)", "Right to Information Movement Journey", "Nuclear Doctrine & No First Use Policy", "Panchsheel Principles & Foreign Policy", "Rise of Coalition Politics in 1990s", "Evolution of Defense Production Self-Reliance", "Post-Independence Tribal Welfare Frameworks", "Evolution of Higher Education (IITs & IIMs)", "National Security Council Creation", "Information Technology Revolution Origins", "Disaster Management Framework Evolution", "India at 75: Strategic Vision for 2047"]
+      },
+      {
+        "id": "constitution_rights",
+        "name": "Indian Constitution & Rights",
+        "description": "Learn laws, rights, duties, and governance frameworks.",
+        "topics": ["Making of the Indian Constitution", "Significance of Preamble to Constitution", "Fundamental Rights Overview", "Fundamental Duties of Citizens", "Directive Principles of State Policy", "Right to Equality (Articles 14-18)", "Right to Freedom of Speech (Article 19)", "Right Against Exploitation", "Right to Freedom of Religion", "Cultural & Educational Rights of Minorities", "Right to Constitutional Remedies (Article 32)", "Constitutional Amendment Process (Article 368)", "Basic Structure Doctrine & Kesavananda Case", "Role of Supreme Court as Guardian", "Public Interest Litigation (PIL) System", "Separation of Powers Framework", "Federal Structure: Union & State Lists", "Emergency Provisions Analysis", "President's Rule (Article 356) Debates", "Right to Information (RTI) Act", "Right to Privacy as Fundamental Right", "Consumer Protection Laws Framework", "Human Rights Commission Role", "Women's Legal Rights & Protections", "Child Protection Laws & POSCO", "Labour Laws & Industrial Relations", "Environmental Protection Legislation", "Cyber Laws & IT Act Framework", "Criminal Justice System Reforms", "Civil Rights vs State Security", "Citizenship Legislation & Amendments", "Reasonable Restrictions on Free Speech", "Legal Aid System & Free Defense", "Rule of Law Principles", "Right to Education (RTE) Impact", "Rights of Differently-Abled Persons", "Intellectual Property Rights (IPR)", "Uniform Civil Code (UCC) Debate", "Sedition Law (Section 124A) Debates", "Data Protection & Digital Privacy", "Prison Reforms & Undertrial Rights", "Euthanasia & Right to Life (Article 21)", "Constitutional Morality Principles", "Protection of Indigenous & Tribal Rights", "Whistleblower Protection Framework", "Fast-Track Courts & Case Pendency", "Right to Clean Environment", "Legal Age of Marriage Debates", "Capital Punishment Ethics", "Future Evolution of Constitution"]
+      },
+      {
+        "id": "world_politics",
+        "name": "World Politics",
+        "description": "Explore global governance, diplomacy, and power dynamics.",
+        "topics": ["United Nations Role & Reform", "Democracy vs Authoritarian Systems", "Cold War Legacy & Modern Power Blocs", "US Foreign Policy Trajectory", "China's Rise & Global Influence", "European Union Governance Structure", "NATO Expansion & Global Alliances", "Middle East Geopolitical Dynamics", "Russia's Strategic Global Position", "Global Trade Wars & Tariff Policies", "International Diplomacy Frameworks", "Human Rights Enforcement Globally", "Refugee Crises & Humanitarian Law", "Climate Change Politics & Paris Accord", "Global Security & Counter-Terrorism", "Nuclear Non-Proliferation Treaties", "UN Peacekeeping Mission Effectiveness", "Sanctions as Diplomatic Tools", "Global Inequality & Developing Nations", "Cyber Warfare & Digital Espionage", "Information Warfare & Propaganda", "Soft Power vs Hard Power Diplomacy", "Global Crisis Management Systems", "Pandemic Politics & Vaccine Diplomacy", "Energy Politics & Oil Alliances (OPEC)", "International Border Disputes", "Global Supply Chain Geopolitics", "Space Politics & Outer Space Treaties", "AI Regulation in Global Politics", "Global Peace & Conflict Resolution"]
+      },
+      {
+        "id": "geopolitics",
+        "name": "Geopolitics",
+        "description": "Strategic global relations, conflicts, and alliances.",
+        "topics": ["Indo-Pacific Strategic Dynamics", "QUAD Alliance Objectives", "BRICS Expansion & Global South", "Belt and Road Initiative (BRI) Analysis", "Maritime Chokepoints (Strait of Malacca)", "Arctic Sovereignty & Resource Competition", "Cyber Domain as Geopolitical Frontier", "Energy Transition & Critical Mineral Control", "Dollar Dominance & De-Dollarization Trends", "Geopolitics of Semiconductor Chips", "Space Weaponization & Satellite Security", "Geopolitics of Water Resources", "Latin America Political Shifts", "African Continental Free Trade & Growth", "Middle East Normalization Accords", "Central Asia Strategic Importance", "South China Sea Territorial Disputes", "Geopolitics of Food Security & Grain", "Technology Sanctions & Tech Decoupling", "Future of Multilateral Alliances"]
+      },
+      {
+        "id": "world_wars",
+        "name": "World Wars & Treaties",
+        "description": "Major global conflicts and treaties shaping world history.",
+        "topics": ["Causes of World War I", "Treaty of Versailles Impact", "Rise of Fascism in Interwar Europe", "League of Nations Breakdown", "World War II Turning Points", "The Holocaust & Human Rights Laws", "Atomic Bomb Decisions & Nuclear Era", "Yalta and Potsdam Conferences", "Formation of the United Nations (1945)", "Marshall Plan & European Recovery", "Korean War & Cold War Proxy", "Cuban Missile Crisis & Brinkmanship", "Vietnam War Strategic Lessons", "Fall of Berlin Wall & End of Cold War", "Geneva Conventions & Rules of War"]
+      },
+      {
+        "id": "psychology",
+        "name": "Psychology & Mind",
+        "description": "Human behavior, emotions, mental processes, and thinking patterns.",
+        "topics": ["Cognitive Biases in Decision Making", "Habit Loops: Cue, Routine, Reward", "Emotional Intelligence (EQ) vs IQ", "Overcoming Imposter Syndrome", "Psychology of Social Media Dopamine", "Dopamine Detox & Focus Reset", "Introversion vs Extroversion Dynamics", "Cognitive Dissonance & Self-Justification", "Bystander Effect & Social Responsibility", "Growth Mindset vs Fixed Mindset", "Anxiety Mechanisms & Coping", "Psychology of Motivation & Drive", "Burnout Prevention & Recovery", "Maslow's Hierarchy in Modern Life", "Subconscious Mind Programming", "Empathy & Active Listening Skills", "Psychology of Persuasion (Cialdini)", "Decision Fatigue & Choice Simplification", "Spotlight Effect & Social Perception", "Exposure Therapy for Fear Overcoming"]
+      },
+      {
+        "id": "social_issues",
+        "name": "Social Issues & Problems",
+        "description": "Discuss real-world societal challenges and solutions.",
+        "topics": ["Income Inequality & Wealth Gap", "Urbanization & Slum Redevelopment", "Gender Wage Gap & Workplace Equality", "Mental Health Stigma Removal", "Educational Disparity & Digital Divide", "Substance Abuse & Rehabilitation", "Elderly Care & Aging Population", "Child Labor Eradication Strategies", "Fast Fashion & Environmental Toll", "Public Healthcare Infrastructure", "Clean Water Access as Human Right", "Youth Unemployment & Gig Economy", "Domestic Violence Legal Frameworks", "Cyberbullying & Online Harassment", "Food Waste & Hunger Eradication"]
+      },
+      {
+        "id": "religion_culture",
+        "name": "Religious & Cultural Studies",
+        "description": "Explore beliefs, traditions, rituals, and philosophies.",
+        "topics": ["Comparative Philosophy: East vs West", "Role of Rituals in Human Societies", "Interfaith Dialogue & Harmony", "Mythology & Modern Storytelling", "Cultural Preservation in Digital Age", "Secularism Across Global Cultures", "Evolution of Sacred Architecture", "Impact of Religion on Ethics", "Festivals as Social Bonding Mechanisms", "Cultural Appropriation vs Exchange"]
+      },
+      {
+        "id": "indian_culture",
+        "name": "Indian Culture & Traditions",
+        "description": "Festivals, rituals, customs, and cultural diversity.",
+        "topics": ["Unity in Diversity Concept in India", "Classical Dance Forms of India", "Evolution of Indian Music Traditions", "Traditional Indian Architecture (Vastu)", "Handlooms & Textile Heritage of India", "Indian Culinary Diversity & Heritage", "Ayurveda & Traditional Wellness", "Folk Art & Tribal Traditions", "Literary Heritage of Sanskrit & Sangam", "Preserving Indigenous Knowledge Systems"]
+      },
+      {
+        "id": "world_cultures",
+        "name": "World Cultures & Issues",
+        "description": "Compare global traditions, lifestyles, and social challenges.",
+        "topics": ["Global Indigenous Rights Movements", "Cultural Effects of Global Migration", "Language Extinction & Revival", "Global Cinema as Cultural Bridge", "Westernization vs Local Heritage"]
+      },
+      {
+        "id": "books_literature",
+        "name": "Books & Literature",
+        "description": "Practice summarizing and analyzing books and ideas.",
+        "topics": ["Dystopian Fiction as Societal Mirror", "Classics Literature Relevance Today", "Biography Analysis: Lessons from Leaders", "Philosophy Books & Daily Mindset", "Poetry as Expressive Medium"]
+      }
+    ]
+  },
+  {
+    "category": "Business & Economic",
+    "genres": [
+      {
+        "id": "finance",
+        "name": "Finance",
+        "description": "Money management, markets, investments, and financial systems.",
+        "topics": ["Financial Literacy & Wealth Building", "Power of Compound Interest", "Budgeting: 50/30/20 Framework", "Emergency Funds Planning", "Inflation & Purchasing Power Erosion", "Central Bank (RBI/FED) Interest Rates", "Stock Market Equities & Dividends", "Mutual Funds vs Index Funds", "Risk vs Reward Asset Allocation", "Credit Scores & Debt Management", "Life, Health & Term Insurance", "Retirement Planning (NPS/EPF)", "Tax Planning Strategies", "UPI & Digital Payment Revolution", "Cryptocurrency & DeFi Principles", "Passive Income Streams Creation", "Behavioral Finance & Money Habits", "Stock Valuation: P/E Ratios", "Diversification Portfolio Rules", "Global Dollar Exchange Systems"]
+      },
+      {
+        "id": "money_wealth",
+        "name": "Money & Wealth",
+        "description": "Personal finance, saving, and wealth-building strategies.",
+        "topics": ["Psychology of Wealth Creation", "Financial Independence (FIRE) Movement", "Real Estate Investment Strategies", "Gold as Inflation Hedge", "Avoiding Common Financial Traps"]
+      },
+      {
+        "id": "business",
+        "name": "Business Strategy",
+        "description": "Business models, operations, and corporate strategies.",
+        "topics": ["Corporate Governance Principles", "Supply Chain Management Resilience", "Platform Business Models (Uber/Airbnb)", "Customer Lifetime Value (LTV) Optimization", "Mergers & Acquisitions Rationale"]
+      },
+      {
+        "id": "startups",
+        "name": "Startups & Innovation",
+        "description": "Innovation, startup culture, MVP building, and disruption.",
+        "topics": ["Minimum Viable Product (MVP) Execution", "Finding Product-Market Fit (PMF)", "Bootstrap vs Venture Capital Funding", "Pitch Deck Storytelling for Investors", "SaaS Business Model Metrics", "Lean Startup Principles", "Pivoting Strategy in Startups", "Customer Acquisition Cost (CAC) Control", "Building Startup Competitive Moats", "Unicorn Hype vs Business Unit Economics"]
+      },
+      {
+        "id": "entrepreneurship",
+        "name": "Entrepreneurship",
+        "description": "Building ideas into businesses and leadership thinking.",
+        "topics": ["Founder Mindset & Grit", "Building Core Founding Teams", "Social Entrepreneurship Impact", "Overcoming Startup Failure", "Scaling Operations 1 to 100"]
+      },
+      {
+        "id": "economics",
+        "name": "Economics",
+        "description": "Supply-demand, inflation, fiscal policy, and global economy.",
+        "topics": ["Supply and Demand Dynamics", "Fiscal Policy vs Monetary Policy", "Global Trade Deficits & Tariffs", "Universal Basic Income (UBI) Debates", "Gig Economy Economic Impact"]
+      }
+    ]
+  },
+  {
+    "category": "Creative & General",
+    "genres": [
+      {
+        "id": "general_topics",
+        "name": "General Topics",
+        "description": "Everyday topics for casual impromptu speaking practice.",
+        "topics": ["Importance of Daily Routine", "Overcoming Fear of Public Speaking", "Benefits of Reading Every Day", "How Travel Broadens Mindset", "Building Meaningful Friendships"]
+      },
+      {
+        "id": "debate_topics",
+        "name": "Debate Topics",
+        "description": "Controversial and opinion-based topics.",
+        "topics": ["Is College Education Necessary Today?", "Social Media Regulation Debates", "Artificial Intelligence Job Disruption", "Privacy vs National Security", "Capital Punishment Ethics"]
+      },
+      {
+        "id": "abstract_thinking",
+        "name": "Abstract Thinking",
+        "description": "Conceptual and philosophical ideas.",
+        "topics": ["What Defines Success?", "Is Time an Illusion?", "Nature of Human Happiness", "Ethics of Artificial Life", "Concept of Freedom"]
+      },
+      {
+        "id": "storytelling",
+        "name": "Storytelling Prompts",
+        "description": "Creative prompts for narrative imagination.",
+        "topics": ["A Failure That Turned Into Blessing", "The Most Influential Person You Met", "An Unforgettable Childhood Memory", "A Lesson Learned Under Pressure", "Imagining Life 50 Years in Future"]
+      },
+      {
+        "id": "motivation_growth",
+        "name": "Motivation & Self Growth",
+        "description": "Personal development and mindset.",
+        "topics": ["Building Emotional Resilience", "The Power of Consistency", "Overcoming Procrastination", "Developing Growth Mindset", "Art of Saying No"]
+      },
+      {
+        "id": "tech_future",
+        "name": "Technology & Future",
+        "description": "AI, innovation, robotics, and future trends.",
+        "topics": ["Artificial General Intelligence (AGI)", "Autonomous Electric Vehicles", "Quantum Computing Breakthroughs", "Space Colonization & Mars", "Biotechnology & CRISPR Editing", "Metaverse & Augmented Reality", "Cybersecurity Threats & Defense", "5G/6G Global Infrastructure", "Robotics in Healthcare", "Green Energy & Nuclear Fusion"]
+      },
+      {
+        "id": "education_career",
+        "name": "Education & Career",
+        "description": "Learning systems, skill growth, and career development.",
+        "topics": ["Future of Online Learning", "Importance of Upskilling in Tech", "Work-Life Balance Myth vs Reality", "Remote Work vs Office Culture", "Role of Mentorship in Career"]
+      }
+    ]
+  }
+]
