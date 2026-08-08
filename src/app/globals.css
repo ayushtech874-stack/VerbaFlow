@@ -15,6 +15,7 @@ html {
   -ms-text-size-adjust: 100%;
   overflow-x: hidden;
   scroll-behavior: smooth;
+  width: 100%;
 }
 
 body {
@@ -34,8 +35,8 @@ a, button, input, select, textarea, [role="button"] {
 
 /* ELEGANT OBSIDIAN & GOLD SCROLLBAR STYLING */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -46,7 +47,7 @@ a, button, input, select, textarea, [role="button"] {
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, #33302b 0%, #d4af37 100%);
   border-radius: 9999px;
-  border: 2px solid #0e0d0b;
+  border: 1px solid #0e0d0b;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -84,8 +85,8 @@ input[type="number"] {
 
 @media (max-width: 640px) {
   .card-zorayda {
-    padding: 1.25rem !important;
-    border-radius: 18px !important;
+    padding: 1rem !important;
+    border-radius: 16px !important;
   }
 }
 
@@ -97,11 +98,13 @@ input[type="number"] {
 .card-zorayda h6 {
   color: #ffffff !important;
   word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .card-zorayda p {
   color: #e5e5e5 !important;
   word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 /* BUTTONS */
@@ -109,14 +112,15 @@ input[type="number"] {
   background-color: #ffffff !important;
   color: #000000 !important;
   border: 2px solid #ffffff !important;
-  padding: 0.65rem 1.5rem;
+  padding: 0.65rem 1.25rem;
   border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   transition: opacity 0.2s ease;
   white-space: normal;
@@ -132,14 +136,15 @@ input[type="number"] {
   background-color: transparent !important;
   color: #ffffff !important;
   border: 2px solid rgba(255, 255, 255, 0.4) !important;
-  padding: 0.65rem 1.5rem;
+  padding: 0.65rem 1.25rem;
   border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   transition: border-color 0.2s ease;
   white-space: normal;
