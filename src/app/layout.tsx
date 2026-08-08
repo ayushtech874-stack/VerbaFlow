@@ -18,20 +18,45 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "VerbaFlow",
   description: "Master spontaneous public speaking with 1,300+ prompts, AI research briefings, and fluency analytics.",
+  metadataBase: new URL("https://verbaflow.vercel.app"),
   verification: {
     google: "uWaKXvizX7DpjnXm4070Pe9NJ2DSn1xtF2Ofx36Xtp4",
   },
+  openGraph: {
+    title: "VerbaFlow",
+    siteName: "VerbaFlow",
+    description: "Master spontaneous public speaking with 1,300+ prompts, AI research briefings, and fluency analytics.",
+    url: "https://verbaflow.vercel.app",
+    type: "website",
+    images: [
+      {
+        url: "/logo.jpg",
+        width: 1024,
+        height: 1024,
+        alt: "VerbaFlow Logo",
+      },
+    ],
+  },
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/logo.jpg", type: "image/jpeg" }
+      { url: "/logo.jpg", type: "image/jpeg" },
+      { url: "/favicon.ico", sizes: "any" }
     ],
-    shortcut: "/favicon.ico",
+    shortcut: "/logo.jpg",
     apple: "/logo.jpg",
   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "VerbaFlow",
+    "alternateName": ["VerbaFlow Impromptu Speaking"],
+    "url": "https://verbaflow.vercel.app",
+    "logo": "https://verbaflow.vercel.app/logo.jpg"
+  };
+
   return (
     <html
       lang="en"
@@ -41,10 +66,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <title>VerbaFlow</title>
         <meta name="google-site-verification" content="uWaKXvizX7DpjnXm4070Pe9NJ2DSn1xtF2Ofx36Xtp4" />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <meta property="og:site_name" content="VerbaFlow" />
         <link rel="icon" href="/logo.jpg" type="image/jpeg" />
-        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="shortcut icon" href="/logo.jpg" />
         <link rel="apple-touch-icon" href="/logo.jpg" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
       <body className="min-h-full flex flex-col font-sans transition-colors duration-200 bg-[#0e0d0b] text-[#ffffff]">
         <ThemeProvider>
