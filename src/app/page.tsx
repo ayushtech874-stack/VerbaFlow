@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import categoriesData from "@/data/categories.json";
 import { Navbar } from "@/components/Navbar";
 import { soundFX } from "@/lib/soundFX";
+import { supabase } from "@/lib/supabase";
 import {
   Sparkles, Mic, Video, RefreshCw, Clock, Download, PlusCircle, BookOpen, CheckCircle, FileText, ArrowDownCircle, Trash2, RotateCcw, Compass, MessageSquare, Send, Lock, Undo2, CheckSquare, Layers, Info, Shuffle, AlertTriangle
 } from "lucide-react";
@@ -29,6 +30,22 @@ interface ChatMessage {
 }
 
 export default function Home() {
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const loggedInName = user ? (user.user_metadata?.full_name || user.email?.split('@')[0]) : null;
+
   const [categories] = useState<CategoryGroup[]>(categoriesData as CategoryGroup[]);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   
@@ -554,9 +571,17 @@ export default function Home() {
       <main className="max-w-6xl mx-auto px-6 py-12 space-y-12">
         {/* Hero Banner */}
         <div className="text-center space-y-3">
-          <span className="text-[11px] font-sans uppercase font-extrabold tracking-[0.25em] text-[#d4af37] border-2 border-[#d4af37] px-4 py-1 rounded-full">
-            Sophisticated Verbal Artistry
-          </span>
+          {loggedInName ? (
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#d4af37]/15 border border-[#d4af37]/40 text-[#d4af37] text-xs font-bold shadow-sm">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Welcome back, <strong className="text-white uppercase tracking-wider">{loggedInName}</strong>! 👋</span>
+            </div>
+          ) : null}
+          <div>
+            <span className="text-[11px] font-sans uppercase font-extrabold tracking-[0.25em] text-[#d4af37] border-2 border-[#d4af37] px-4 py-1 rounded-full">
+              Sophisticated Verbal Artistry
+            </span>
+          </div>
           <h1 className="text-5xl font-serif font-extrabold text-[#ffffff] tracking-tight">
             Master the Art of Spontaneous Discourse
           </h1>

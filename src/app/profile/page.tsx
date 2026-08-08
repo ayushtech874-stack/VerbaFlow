@@ -62,6 +62,7 @@ export default function ProfilePage() {
   };
 
   const activeEmail = user ? user.email : demoLoggedInUser;
+  const username = activeEmail ? (user?.user_metadata?.full_name || activeEmail.split('@')[0]) : null;
 
   return (
     <div className="min-h-screen bg-[#f5f2eb] dark:bg-[#0e0d0b] text-[#000000] dark:text-[#ffffff] font-sans transition-colors duration-200">
@@ -80,17 +81,17 @@ export default function ProfilePage() {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 rounded-full border-2 border-[#b8860b] dark:border-[#d4af37] flex items-center justify-center font-serif text-2xl font-bold text-[#b8860b] dark:text-[#d4af37] bg-[#f8f5ee] dark:bg-[#1a1815]">
-                {activeEmail ? activeEmail.substring(0, 1).toUpperCase() : "?"}
+                {username ? username.substring(0, 1).toUpperCase() : "?"}
               </div>
               <div>
-                <h3 className="text-xl font-serif font-bold text-[#000000] dark:text-[#ffffff]">
-                  {activeEmail ? activeEmail : "No User Logged In"}
+                <h3 className="text-2xl font-serif font-bold text-[#000000] dark:text-[#ffffff]">
+                  {username ? `Hi, ${username}!` : "No User Logged In"}
                 </h3>
                 <p className="text-xs font-semibold text-[#222222] dark:text-[#e5e5e5] flex items-center gap-1.5 mt-1">
                   {activeEmail ? (
                     <>
                       <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                      Active Authenticated Speaker Session
+                      <span>Logged in as <strong>{activeEmail}</strong></span>
                     </>
                   ) : (
                     "Guest Mode — Sign in to synchronize your speech data"
@@ -104,7 +105,7 @@ export default function ProfilePage() {
                 onClick={handleSignOut}
                 className="px-6 py-2.5 rounded-full border-2 border-rose-600 text-rose-600 hover:bg-rose-600 hover:text-white font-bold text-xs uppercase tracking-wider transition-all flex items-center gap-2"
               >
-                <LogOut className="w-4 h-4" /> Sign Out ({activeEmail.split('@')[0]})
+                <LogOut className="w-4 h-4" /> Sign Out ({username})
               </button>
             ) : null}
           </div>
@@ -123,10 +124,10 @@ export default function ProfilePage() {
 
               <div className="p-4 rounded-2xl border border-black/15 dark:border-white/15 text-center">
                 <span className="text-xs font-bold text-[#b8860b] dark:text-[#d4af37] uppercase tracking-wider block mb-1">
-                  Cloud Database
+                  Account Status
                 </span>
                 <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400 flex items-center justify-center gap-1 mt-1">
-                  <ShieldCheck className="w-4 h-4" /> Supabase Connected
+                  <ShieldCheck className="w-4 h-4" /> Active & Synced
                 </span>
               </div>
             </div>
