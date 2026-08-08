@@ -571,12 +571,6 @@ export default function Home() {
       <main className="max-w-6xl mx-auto px-6 py-12 space-y-12">
         {/* Hero Banner */}
         <div className="text-center space-y-3">
-          {loggedInName ? (
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#d4af37]/15 border border-[#d4af37]/40 text-[#d4af37] text-xs font-bold shadow-sm">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Welcome back, <strong className="text-white uppercase tracking-wider">{loggedInName}</strong>! 👋</span>
-            </div>
-          ) : null}
           <div>
             <span className="text-[11px] font-sans uppercase font-extrabold tracking-[0.25em] text-[#d4af37] border-2 border-[#d4af37] px-4 py-1 rounded-full">
               Sophisticated Verbal Artistry

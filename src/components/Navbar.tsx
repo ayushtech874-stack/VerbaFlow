@@ -3,23 +3,36 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { Menu, X, User } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 export function Navbar() {
   const [mounted, setMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
   const pathname = usePathname();
 
   useEffect(() => {
     setMounted(true);
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
+
+  const username = user ? (user.user_metadata?.full_name || user.email?.split('@')[0]) : null;
 
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/debate", label: "Debate Arena" },
     { href: "/dashboard", label: "Analytics" },
     { href: "/history", label: "History" },
-    { href: "/profile", label: "Profile" }
+    { href: "/profile", label: username ? username.toUpperCase() : "Profile" }
   ];
 
   return (
