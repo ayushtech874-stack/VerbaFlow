@@ -32,7 +32,7 @@ export default function Home() {
   const [categories] = useState<CategoryGroup[]>(categoriesData as CategoryGroup[]);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   
-  // SINGLE OR MULTI-GENRE SELECTION STATE (BY DEFAULT ALL 26 GENRES ARE SELECTED)
+  // SINGLE OR MULTI-GENRE SELECTION STATE (DEFAULT TO ALL 26 GENRES)
   const [selectedGenreIds, setSelectedGenreIds] = useState<string[]>(["all"]);
   const [showGenreModal, setShowGenreModal] = useState<boolean>(false);
   
@@ -47,7 +47,6 @@ export default function Home() {
   // Prep Timer States (Supports 1, 2, 3, 5, 10, 15, 30, 45, 60 MIN)
   const [prepTimeMinutes, setPrepTimeMinutes] = useState<number>(1);
   const [customPrepMinutesInput, setCustomPrepMinutesInput] = useState<string>("");
-  const [totalPrepSeconds, setTotalPrepSeconds] = useState<number>(60);
   const [prepSecondsLeft, setPrepSecondsLeft] = useState<number>(0);
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false);
 
@@ -386,26 +385,8 @@ export default function Home() {
 
   const handleStartPrepTimer = (mins: number) => {
     setPrepTimeMinutes(mins);
-    const secs = Math.round(mins * 60);
-    setTotalPrepSeconds(secs);
-    setPrepSecondsLeft(secs);
+    setPrepSecondsLeft(mins * 60);
     setIsTimerRunning(true);
-  };
-
-  const handleTogglePrepTimer = () => {
-    if (prepSecondsLeft === 0) {
-      const secs = Math.round(prepTimeMinutes * 60);
-      setTotalPrepSeconds(secs);
-      setPrepSecondsLeft(secs);
-    }
-    setIsTimerRunning(!isTimerRunning);
-  };
-
-  const handleResetPrepTimer = () => {
-    setIsTimerRunning(false);
-    const secs = Math.round(prepTimeMinutes * 60);
-    setTotalPrepSeconds(secs);
-    setPrepSecondsLeft(secs);
   };
 
   const handleSetCustomPrepMinutes = () => {
@@ -589,18 +570,18 @@ export default function Home() {
 
         {/* 1. Speech Genre Selector Tab (Default: All 26 Selected) */}
         <section ref={topicSelectionRef} className="card-zorayda p-4 sm:p-8 space-y-4 sm:space-y-6 scroll-mt-24">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b-2 border-white/15 pb-4">
+          <div className="section-header-banner flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h2 className="font-serif font-bold text-base sm:text-lg text-[#ffffff] flex items-center gap-2">
-                <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#d4af37] text-black flex items-center justify-center text-[10px] sm:text-xs font-mono font-bold">1</span>
-                SPEECH GENRE SCOPE
+              <h2 className="section-header-title flex items-center gap-2.5">
+                <span className="section-step-badge w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-xs font-mono">1</span>
+                STEP 1: SPEECH GENRE SCOPE
               </h2>
-              <p className="text-[11px] sm:text-xs font-semibold text-[#d4af37] mt-1 flex items-center gap-1.5 leading-tight">
+              <p className="text-[11px] sm:text-xs font-semibold text-[#e5c158] mt-1.5 flex items-center gap-1.5 leading-tight">
                 <Info className="w-3.5 h-3.5 text-[#d4af37] flex-shrink-0" /> By default all 26 genres are selected. Click the tab below to customize specific genres!
               </p>
             </div>
 
-            <span className="text-[10px] sm:text-xs font-extrabold text-[#d4af37] font-mono border border-[#d4af37]/40 px-3 py-1 rounded-full bg-black self-start sm:self-auto">
+            <span className="text-[10px] sm:text-xs font-extrabold text-[#d4af37] font-mono border-2 border-[#d4af37]/60 px-3.5 py-1.5 rounded-full bg-black/90 shadow-md self-start sm:self-auto">
               {selectedGenreIds.includes("all") ? "All 26 Genres Selected (Default)" : `${selectedGenreIds.length} Genre(s) Selected`}
             </span>
           </div>
@@ -634,14 +615,18 @@ export default function Home() {
           </div>
         </section>
 
-
         {/* 2. Topic Prompt, Single Genre Description & Prominent Random Generator Step */}
         <section className="card-zorayda p-4 sm:p-8 space-y-5 sm:space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b-2 border-white/15 pb-4">
-            <h2 className="font-serif font-bold text-base sm:text-lg text-[#ffffff] flex items-center gap-2">
-              <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#d4af37] text-black flex items-center justify-center text-[10px] sm:text-xs font-mono font-bold">2</span>
-              SPEECH MOTION PROMPT & GENERATOR
-            </h2>
+          <div className="section-header-banner flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 className="section-header-title flex items-center gap-2.5">
+                <span className="section-step-badge w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-xs font-mono">2</span>
+                STEP 2: SPEECH MOTION PROMPT & GENERATOR
+              </h2>
+              <p className="text-[11px] sm:text-xs font-semibold text-[#e5c158] mt-1.5 flex items-center gap-1.5 leading-tight">
+                <Info className="w-3.5 h-3.5 text-[#d4af37] flex-shrink-0" /> Click Shuffle below or type your custom prompt to establish your speech focus.
+              </p>
+            </div>
 
             {/* HIGHLY PROMINENT RANDOM TOPIC GENERATOR BUTTON */}
             <button
@@ -652,6 +637,7 @@ export default function Home() {
               🎲 Shuffle & Generate Random Topic Prompt
             </button>
           </div>
+
 
           {/* Target Speech Duration Selector Prior to Confirmation */}
           <div className="p-3.5 sm:p-4 rounded-2xl border-2 border-[#d4af37]/60 bg-[#14120f] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -969,8 +955,8 @@ export default function Home() {
           </section>
         )}
 
-        {/* 3. Luxury Obsidian & Gold Circular Preparation Ring Clock */}
-        <section className="card-zorayda p-4 sm:p-8 space-y-6 sm:space-y-8">
+        {/* 3. Thinking & Preparation Timer with Helpful Research Options Note */}
+        <section className="card-zorayda p-4 sm:p-8 space-y-5 sm:space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b-2 border-white/15 pb-4">
             <div>
               <h2 className="font-serif font-bold text-base sm:text-lg text-[#ffffff] flex items-center gap-2">
@@ -978,118 +964,49 @@ export default function Home() {
                 THINKING & PREPARATION TIMER (AUDIO COUNTDOWN &lt; 10s)
               </h2>
               <p className="text-[11px] sm:text-xs font-semibold text-[#d4af37] mt-1.5 flex items-center gap-1.5 leading-tight">
-                <Info className="w-3.5 h-3.5 text-[#d4af37] flex-shrink-0" /> Select your thinking duration below. Use your own sources or generate AI speech scripts during preparation!
+                <Info className="w-3.5 h-3.5 text-[#d4af37] flex-shrink-0" /> Note: During preparation, you can use your own research sources or directly generate speech scripts using our AI Chatbot assistant!
               </p>
             </div>
             <Clock className="w-5 h-5 text-[#d4af37] hidden sm:block" />
           </div>
 
-
-          {/* Quick Time Preset Buttons */}
-          <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
-            {[1, 2, 3, 5, 10, 15, 30, 45, 60].map((mins) => (
-              <button
-                key={mins}
-                onClick={() => handleStartPrepTimer(mins)}
-                className={`px-3 py-1.5 rounded-full text-[10px] sm:text-xs font-extrabold uppercase tracking-wider transition-all border-2 ${
-                  prepTimeMinutes === mins && isTimerRunning
-                    ? "bg-[#d4af37] text-black border-[#d4af37] shadow-lg shadow-[#d4af37]/20 scale-105"
-                    : "border-white/30 text-[#ffffff] bg-[#14120f] hover:border-[#d4af37]"
-                }`}
-              >
-                {mins} MIN
-              </button>
-            ))}
-
-            <div className="flex items-center gap-1 ml-1 sm:ml-2">
-              <input
-                type="number"
-                step="0.5"
-                value={customPrepMinutesInput}
-                onChange={(e) => setCustomPrepMinutesInput(e.target.value)}
-                placeholder="7.5"
-                className="w-16 sm:w-20 bg-[#14120f] border-2 border-white/40 rounded-full px-2.5 py-1 text-[10px] sm:text-xs font-bold text-[#ffffff] text-center placeholder-[#888888] focus:outline-none focus:border-[#d4af37]"
-              />
-              <span className="text-[10px] sm:text-xs font-bold text-[#d4af37]">MIN</span>
-              <button onClick={handleSetCustomPrepMinutes} className="btn-zorayda-outline py-0.5 px-2.5 text-[9px] sm:text-[10px] border-[#d4af37] text-[#d4af37]">
-                Set
-              </button>
-            </div>
-          </div>
-
-          {/* CIRCULAR OBSIDIAN & GOLD COUNTDOWN CLOCK WIDGET */}
-          <div className="flex flex-col items-center justify-center space-y-4 py-2">
-            <div className="relative w-56 h-56 sm:w-64 sm:h-64 flex items-center justify-center">
-              {/* SVG Circular Progress Ring */}
-              <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                {/* Background Ring Track */}
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="42"
-                  className="stroke-[#22201c]"
-                  strokeWidth="5"
-                  fill="transparent"
-                />
-                {/* Glowing Gold Active Progress Track */}
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="42"
-                  className={`transition-all duration-1000 ease-linear ${
-                    prepSecondsLeft <= 10 && prepSecondsLeft > 0
-                      ? "stroke-rose-500 animate-pulse"
-                      : "stroke-[#d4af37]"
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+              {[1, 2, 3, 5, 10, 15, 30, 45, 60].map((mins) => (
+                <button
+                  key={mins}
+                  onClick={() => handleStartPrepTimer(mins)}
+                  className={`px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-extrabold uppercase tracking-wider transition-all border-2 ${
+                    prepTimeMinutes === mins && isTimerRunning
+                      ? "bg-[#d4af37] text-black border-[#d4af37] shadow-md"
+                      : "border-white/40 text-[#ffffff] bg-[#14120f] hover:border-[#d4af37]"
                   }`}
-                  strokeWidth="5"
-                  strokeDasharray={263.89}
-                  strokeDashoffset={
-                    totalPrepSeconds > 0
-                      ? 263.89 * (1 - (totalPrepSeconds - prepSecondsLeft) / totalPrepSeconds)
-                      : 0
-                  }
-                  strokeLinecap="round"
-                  fill="transparent"
+                >
+                  {mins} MIN
+                </button>
+              ))}
+
+              <div className="flex items-center gap-1 ml-1 sm:ml-2">
+                <input
+                  type="number"
+                  step="0.5"
+                  value={customPrepMinutesInput}
+                  onChange={(e) => setCustomPrepMinutesInput(e.target.value)}
+                  placeholder="7.5"
+                  className="w-16 sm:w-24 bg-[#14120f] border-2 border-white/40 rounded-full px-2.5 py-1 text-[10px] sm:text-xs font-bold text-[#ffffff] text-center placeholder-[#888888] focus:outline-none focus:border-[#d4af37]"
                 />
-              </svg>
-
-              {/* Inner Obsidian Dial Display */}
-              <div className="absolute inset-4 rounded-full bg-[#14120f] border-2 border-[#d4af37]/40 shadow-2xl shadow-black/80 flex flex-col items-center justify-center p-4 text-center space-y-1">
-                <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.2em] text-[#d4af37]/80 font-bold">
-                  {isTimerRunning ? "THINKING INTERVAL" : prepSecondsLeft === 0 ? "TIME COMPLETE" : "PAUSED"}
-                </span>
-
-                <div className={`text-3xl sm:text-4xl font-black font-mono tracking-wider ${
-                  prepSecondsLeft <= 10 && prepSecondsLeft > 0 ? "text-rose-500 animate-pulse" : "text-[#ffffff]"
-                }`}>
-                  {Math.floor(prepSecondsLeft / 60)}:{(prepSecondsLeft % 60).toString().padStart(2, "0")}
-                </div>
-
-                <span className="text-[10px] font-mono text-[#888888]">
-                  Goal: {prepTimeMinutes} MIN (~{Math.round(prepTimeMinutes * 60)}s)
-                </span>
+                <span className="text-[10px] sm:text-xs font-bold text-[#d4af37]">MIN</span>
+                <button onClick={handleSetCustomPrepMinutes} className="btn-zorayda-outline py-0.5 px-2 text-[9px] sm:text-[10px]">
+                  Set
+                </button>
               </div>
             </div>
 
-            {/* Timer Control Buttons */}
-            <div className="flex items-center gap-3 pt-1">
-              <button
-                onClick={handleTogglePrepTimer}
-                className="btn-zorayda bg-[#d4af37] text-black border-[#d4af37] py-2 px-6 text-xs font-black shadow-lg shadow-[#d4af37]/20 hover:scale-105 transition-all"
-              >
-                {isTimerRunning ? "Pause Timer ⏸" : prepSecondsLeft === 0 ? "Restart Timer 🔄" : "Start Countdown ▶"}
-              </button>
-
-              <button
-                onClick={handleResetPrepTimer}
-                className="btn-zorayda-outline py-2 px-4 text-xs font-extrabold border-white/30 text-white hover:border-[#d4af37]"
-              >
-                Reset
-              </button>
+            <div className={`text-2xl sm:text-3xl font-black font-mono tracking-wider text-center sm:text-right ${prepSecondsLeft <= 10 && prepSecondsLeft > 0 ? "text-rose-500 animate-pulse" : "text-[#d4af37]"}`}>
+              {Math.floor(prepSecondsLeft / 60)}:{(prepSecondsLeft % 60).toString().padStart(2, "0")}
             </div>
           </div>
         </section>
-
 
         {/* 4. Speech Recording Studio (With Discard, Retake, Save History & New Topic Options) */}
         <section ref={recordingStudioRef} className="card-zorayda p-4 sm:p-8 space-y-5 sm:space-y-6 scroll-mt-24">
