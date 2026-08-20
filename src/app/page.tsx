@@ -32,10 +32,11 @@ export default function Home() {
   const [categories] = useState<CategoryGroup[]>(categoriesData as CategoryGroup[]);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   
-  // SINGLE OR MULTI-GENRE SELECTION STATE (DEFAULT TO 'indian_history')
-  const [selectedGenreIds, setSelectedGenreIds] = useState<string[]>(["indian_history"]);
+  // SINGLE OR MULTI-GENRE SELECTION STATE (BY DEFAULT ALL 26 GENRES ARE SELECTED)
+  const [selectedGenreIds, setSelectedGenreIds] = useState<string[]>(["all"]);
+  const [showGenreModal, setShowGenreModal] = useState<boolean>(false);
   
-  const [currentTopic, setCurrentTopic] = useState<string>("Click any genre below or press 'Shuffle & Generate Random Topic' to begin!");
+  const [currentTopic, setCurrentTopic] = useState<string>("Click 'Shuffle & Generate Random Topic Prompt' to get your impromptu topic!");
   const [isSlotMachine, setIsSlotMachine] = useState<boolean>(false);
   const [customTopicInput, setCustomTopicInput] = useState<string>("");
 
@@ -586,85 +587,53 @@ export default function Home() {
           </p>
         </div>
 
-        {/* 1. Domain Selector with Multi-Genre Selection & Clean Layout */}
-        <section ref={topicSelectionRef} className="card-zorayda p-4 sm:p-8 space-y-5 sm:space-y-6 scroll-mt-24">
+        {/* 1. Speech Genre Selector Tab (Default: All 26 Selected) */}
+        <section ref={topicSelectionRef} className="card-zorayda p-4 sm:p-8 space-y-4 sm:space-y-6 scroll-mt-24">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b-2 border-white/15 pb-4">
             <div>
               <h2 className="font-serif font-bold text-base sm:text-lg text-[#ffffff] flex items-center gap-2">
                 <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#d4af37] text-black flex items-center justify-center text-[10px] sm:text-xs font-mono font-bold">1</span>
-                SELECT SPEECH GENRE
+                SPEECH GENRE SCOPE
               </h2>
               <p className="text-[11px] sm:text-xs font-semibold text-[#d4af37] mt-1 flex items-center gap-1.5 leading-tight">
-                <Info className="w-3.5 h-3.5 text-[#d4af37] flex-shrink-0" /> Click any single genre or select multiple genres to mix speech topics!
+                <Info className="w-3.5 h-3.5 text-[#d4af37] flex-shrink-0" /> By default all 26 genres are selected. Click the tab below to customize specific genres!
               </p>
             </div>
 
-            <div className="flex items-center justify-between sm:justify-end gap-2.5">
-              <button
-                onClick={handleSelectAllGenres}
-                className="btn-zorayda-outline py-1 px-3 sm:px-4 text-[11px] sm:text-xs text-[#d4af37] border-[#d4af37]/60 hover:bg-[#d4af37]/10"
-              >
-                <CheckSquare className="w-3.5 h-3.5 inline mr-1" /> Select All 26 Genres
-              </button>
-              <span className="text-[10px] sm:text-xs font-extrabold text-[#d4af37] font-mono border border-[#d4af37]/40 px-2.5 py-1 rounded-full bg-black flex-shrink-0">
-                {selectedGenreIds.includes("all") ? "All 26" : `${selectedGenreIds.length} Selected`}
-              </span>
-            </div>
+            <span className="text-[10px] sm:text-xs font-extrabold text-[#d4af37] font-mono border border-[#d4af37]/40 px-3 py-1 rounded-full bg-black self-start sm:self-auto">
+              {selectedGenreIds.includes("all") ? "All 26 Genres Selected (Default)" : `${selectedGenreIds.length} Genre(s) Selected`}
+            </span>
           </div>
 
-          {/* Category Filter Tabs */}
-          <div className="flex flex-wrap gap-1.5 sm:gap-2">
+          {/* DESIGNATED OBSIDIAN & GOLD GENRE SELECTOR TAB BUTTON */}
+          <div className="p-4 sm:p-5 rounded-2xl border-2 border-[#d4af37] bg-[#1a1815] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg hover:border-[#d4af37] transition-all">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-[#d4af37]/20 border-2 border-[#d4af37] text-[#d4af37] flex items-center justify-center flex-shrink-0">
+                <Layers className="w-5 h-5 text-[#d4af37]" />
+              </div>
+              <div>
+                <h4 className="font-serif font-extrabold text-sm sm:text-base text-[#ffffff]">
+                  {selectedGenreIds.includes("all")
+                    ? "All 26 Speech Genres Active"
+                    : selectedGenresList.map((g) => g.name).join(", ")}
+                </h4>
+                <p className="text-[11px] sm:text-xs text-[#aaaaaa]">
+                  {selectedGenreIds.includes("all")
+                    ? "Includes Indian History, Philosophy, Tech Trends, Business, Creative & 21 more"
+                    : `${selectedGenresList.length} specific genre scope active`}
+                </p>
+              </div>
+            </div>
+
             <button
-              onClick={() => setSelectedCategory("All")}
-              className={`px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-extrabold uppercase tracking-wider transition-all border-2 ${
-                selectedCategory === "All"
-                  ? "bg-[#d4af37] text-black border-[#d4af37] shadow-md"
-                  : "border-white/40 text-[#ffffff] bg-[#1a1815] hover:border-[#d4af37]"
-              }`}
+              onClick={() => setShowGenreModal(true)}
+              className="btn-zorayda bg-[#d4af37] text-black border-[#d4af37] py-2 px-5 text-xs font-extrabold hover:scale-105 transition-all w-full sm:w-auto justify-center"
             >
-              ALL (26)
+              <CheckSquare className="w-4 h-4 text-black" /> Customize Speech Genres ⚙️
             </button>
-            {categories.map((cat) => (
-              <button
-                key={cat.category}
-                onClick={() => setSelectedCategory(cat.category)}
-                className={`px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-extrabold uppercase tracking-wider transition-all border-2 ${
-                  selectedCategory === cat.category
-                    ? "bg-[#d4af37] text-black border-[#d4af37] shadow-md"
-                    : "border-white/40 text-[#ffffff] bg-[#1a1815] hover:border-[#d4af37]"
-                }`}
-              >
-                {cat.category}
-              </button>
-            ))}
-          </div>
-
-          {/* Clean Scrollable Gallery Grid */}
-          <div className="max-h-80 overflow-y-auto pr-1.5 custom-scrollbar border-2 border-white/10 p-3 sm:p-4 rounded-2xl bg-black/40">
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-3">
-              {visibleGenres.map((genre) => {
-                const isSelected = selectedGenreIds.includes(genre.id) || selectedGenreIds.includes("all");
-                return (
-                  <button
-                    key={genre.id}
-                    onClick={() => handleToggleGenre(genre.id)}
-                    title={genre.description}
-                    className={`w-full px-2.5 py-2.5 sm:px-3.5 sm:py-3 rounded-xl border-2 font-serif font-extrabold text-[11px] sm:text-xs text-left transition-all flex items-center justify-between gap-1.5 ${
-                      isSelected
-                        ? "bg-[#d4af37] text-black border-[#d4af37] shadow-md scale-[1.01]"
-                        : "bg-[#1a1815] border-white/20 text-white hover:border-[#d4af37]"
-                    }`}
-                  >
-                    <span className="truncate">{genre.name}</span>
-                    <span className={`text-[9px] sm:text-[10px] font-mono flex-shrink-0 ${isSelected ? "text-black font-extrabold" : "text-[#d4af37]"}`}>
-                      ({genre.topics.length})
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
           </div>
         </section>
+
 
         {/* 2. Topic Prompt, Single Genre Description & Prominent Random Generator Step */}
         <section className="card-zorayda p-4 sm:p-8 space-y-5 sm:space-y-6">
@@ -1343,6 +1312,110 @@ export default function Home() {
           </div>
         </div>
       )}
+      {/* LUXURY OBSIDIAN & GOLD GENRE SELECTION POPUP MODAL DIALOG */}
+      {showGenreModal && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 sm:p-6 animate-fadeIn">
+          <div className="bg-[#14120f] border-2 border-[#d4af37] rounded-3xl max-w-3xl w-full p-5 sm:p-8 space-y-6 shadow-2xl max-h-[85vh] flex flex-col">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between border-b-2 border-white/15 pb-4">
+              <div>
+                <h3 className="font-serif text-lg sm:text-xl font-extrabold text-[#d4af37] flex items-center gap-2">
+                  <Layers className="w-5 h-5 text-[#d4af37]" /> Select Specific Speech Genres
+                </h3>
+                <p className="text-[11px] sm:text-xs font-semibold text-[#cccccc] mt-0.5">
+                  Pick any single genre or select multiple genres to mix speech motion prompts!
+                </p>
+              </div>
+              <button
+                onClick={() => setShowGenreModal(false)}
+                className="w-8 h-8 rounded-full bg-[#1a1815] border border-white/20 text-[#ffffff] font-bold flex items-center justify-center hover:border-[#d4af37] hover:text-[#d4af37]"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Quick Action Controls & Category Filter Tabs */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between gap-3">
+                <button
+                  onClick={() => {
+                    handleSelectAllGenres();
+                  }}
+                  className="btn-zorayda-outline py-1.5 px-4 text-xs text-[#d4af37] border-[#d4af37]/60 hover:bg-[#d4af37]/10"
+                >
+                  <CheckSquare className="w-4 h-4 inline mr-1" /> Select All 26 Genres (Default)
+                </button>
+                <span className="text-xs font-extrabold text-[#d4af37] font-mono border border-[#d4af37]/40 px-3 py-1 rounded-full bg-black">
+                  {selectedGenreIds.includes("all") ? "All 26 Selected" : `${selectedGenreIds.length} Selected`}
+                </span>
+              </div>
+
+              <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                <button
+                  onClick={() => setSelectedCategory("All")}
+                  className={`px-3 py-1 rounded-full text-[10px] sm:text-xs font-extrabold uppercase tracking-wider transition-all border-2 ${
+                    selectedCategory === "All"
+                      ? "bg-[#d4af37] text-black border-[#d4af37] shadow-md"
+                      : "border-white/40 text-[#ffffff] bg-[#1a1815] hover:border-[#d4af37]"
+                  }`}
+                >
+                  ALL (26)
+                </button>
+                {categories.map((cat) => (
+                  <button
+                    key={cat.category}
+                    onClick={() => setSelectedCategory(cat.category)}
+                    className={`px-3 py-1 rounded-full text-[10px] sm:text-xs font-extrabold uppercase tracking-wider transition-all border-2 ${
+                      selectedCategory === cat.category
+                        ? "bg-[#d4af37] text-black border-[#d4af37] shadow-md"
+                        : "border-white/40 text-[#ffffff] bg-[#1a1815] hover:border-[#d4af37]"
+                    }`}
+                  >
+                    {cat.category}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Scrollable Genre Grid */}
+            <div className="flex-1 overflow-y-auto pr-1.5 custom-scrollbar border-2 border-white/10 p-3 sm:p-4 rounded-2xl bg-black/40">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5">
+                {visibleGenres.map((genre) => {
+                  const isSelected = selectedGenreIds.includes(genre.id) || selectedGenreIds.includes("all");
+                  return (
+                    <button
+                      key={genre.id}
+                      onClick={() => handleToggleGenre(genre.id)}
+                      title={genre.description}
+                      className={`w-full px-3 py-3 rounded-xl border-2 font-serif font-extrabold text-xs text-left transition-all flex items-center justify-between gap-2 ${
+                        isSelected
+                          ? "bg-[#d4af37] text-black border-[#d4af37] shadow-md scale-[1.01]"
+                          : "bg-[#1a1815] border-white/20 text-white hover:border-[#d4af37]"
+                      }`}
+                    >
+                      <span className="truncate">{genre.name}</span>
+                      <span className={`text-[10px] font-mono flex-shrink-0 ${isSelected ? "text-black font-extrabold" : "text-[#d4af37]"}`}>
+                        ({genre.topics.length})
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="pt-2 flex justify-end">
+              <button
+                onClick={() => setShowGenreModal(false)}
+                className="btn-zorayda bg-[#d4af37] text-black border-[#d4af37] py-2.5 px-6 text-xs font-black"
+              >
+                Apply Selected Genres ✅
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
